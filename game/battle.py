@@ -2,7 +2,8 @@ import random
 import numpy as np
 
 from game.status_functions import status_recovery
-from game.attacks._base_attack_functions import conduct_status_based_action 
+from game.attacks._base_attack_functions import conduct_status_based_action
+
 
 def single_battle(character1, character2):
     """
@@ -26,10 +27,10 @@ def single_battle(character1, character2):
     while not character1.is_defeated() and not character2.is_defeated():
         # Determine turn order based on speed
         speed = random.normalvariate(character1.speed - character2.speed,
-                                      (character1.speed + character2.speed)**0.5)
-        
+                                     (character1.speed + character2.speed) ** 0.5)
+
         first, second = (character1, character2) if speed >= 0 else (character2, character1)
-        
+
         # First character might heal status, chooses and executes an attack
         if first.can_attack:
             status_recovery(first)
@@ -52,44 +53,37 @@ def single_battle(character1, character2):
 
     return "It's a tie!"
 
+
 def initialize_defeated_arrays(characters):
     return np.repeat(False, len(characters))
+
 
 def team_battle(characters1, characters2):
     defeated1 = initialize_defeated_arrays(characters1)
     defeated2 = initialize_defeated_arrays(characters2)
-    
+
     character1 = characters1[0]
     character2 = characters2[0]
-    
+
     index1 = 0
     index2 = 0
-    while (not(all(defeated1)) and not(all(defeated2))):
+    while (not (all(defeated1)) and not (all(defeated2))):
         single_battle(character1, character2)
         if character1.is_defeated():
             defeated1[index1] = True
             index1 += 1
-            character1 = characters1[np.min([index1, len(characters1)-1])]
-            
+            character1 = characters1[np.min([index1, len(characters1) - 1])]
+
         if character2.is_defeated():
             defeated2[index2] = True
             index2 += 1
-            character2 = characters2[np.min([index2, len(characters2)-1])]
-        
+            character2 = characters2[np.min([index2, len(characters2) - 1])]
+
         if all(defeated1) and all(defeated2):
             return "Draw"
-        
+
         if all(defeated1):
             return "Team 2"
-        
+
         if all(defeated2):
             return "Team 1"
-
-    
-    
-        
-    
-    
-    
-    
-    
