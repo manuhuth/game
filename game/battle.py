@@ -1,4 +1,5 @@
 import random
+import numpy as np
 
 from game.status_functions import status_recovery
 from game.attacks._base_attack_functions import conduct_status_based_action 
@@ -50,3 +51,46 @@ def single_battle(character1, character2):
             return second.name
 
     return "It's a tie!"
+
+def initialize_defeated_arrays(characters):
+    return np.repeat(False, len(characters))
+
+def team_battle(characters1, characters2):
+    defeated1 = initialize_defeated_arrays(characters1)
+    defeated2 = initialize_defeated_arrays(characters2)
+    
+    character1 = characters1[0]
+    character2 = characters2[0]
+    
+    index1 = 0
+    index2 = 0
+    while (not(all(defeated1)) and not(all(defeated2))):
+        print(character1.name)
+        single_battle(character1, character2)
+        if character1.is_defeated():
+            defeated1[index1] = True
+            index1 += 1
+            character1 = characters1[np.min([index1, len(characters1)-1])]
+            
+        if character2.is_defeated():
+            defeated2[index2] = True
+            index2 += 1
+            character2 = characters2[np.min([index2, len(characters2)-1])]
+        
+        if all(defeated1) and all(defeated2):
+            return "Draw"
+        
+        if all(defeated1):
+            return "Team 2"
+        
+        if all(defeated2):
+            return "Team 1"
+
+    
+    
+        
+    
+    
+    
+    
+    

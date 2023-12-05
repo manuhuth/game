@@ -98,7 +98,7 @@ class Character:
         """
         return self.health <= 0
     
-    def choose_attack(self):
+    def choose_attack(self, defender):
         """
         Chooses an attack based on the character's strategy.
 

@@ -54,7 +54,7 @@ def conduct_attack(attacker, defender):
     -------
     None
     """
-    attack = attacker.choose_attack()
+    attack = attacker.choose_attack(defender)
     if attack:
         attack(attacker, defender)
 

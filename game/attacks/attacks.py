@@ -201,6 +201,30 @@ def telling_different_phd_duration_times(attacker, defender):
         """
         defender.change_status("puzzled")
 
+def travel_money_use(attacker, defender):
+        """
+        Executes the attack from the attacker to the defender.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+
+        Returns
+        -------
+        None
+        """
+        damage = simple_attack_uniform(attacker, defender,
+                                       power_attack=60,
+                                       bound_multiplicator=0.2)
+        
+        #use advantages of types
+        damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
+        
+        defender.take_damage(damage_adjusted)
+
 def proposal_help(attacker, defender):
         """
         Makes the defender sleeping.
@@ -236,3 +260,110 @@ def school_talk(attacker, defender):
         #print("school_talk")
         defender.change_status("sleeping")
 
+
+def julia_attacks(attacker, defender):
+    """
+        Makes the attacker puzzled due to unspecified type issues, attack bounces back to the attacker.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+    """
+    attacker.change_status("puzzled")
+
+
+def hausmeister_power(attacker, defender):
+    """
+        Makes the defender sad due to the power of the Hausmeister.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+    """
+    defender.change_status("sad")
+
+
+def create_multiple_overleaf_documents(attacker, defender):
+    """
+        Makes the defender puzzled due to the multiple overleaf documents.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+    """
+    defender.change_status("puzzled")
+
+
+def unsupervised_learning(attacker, defender):
+    """
+        Makes the defender puzzled due to the unsupervised learning outcome of the attacker.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+    """
+    defender.change_status("puzzled")
+
+
+def wrong_results(attacker, defender):
+    """
+        Makes the defender puzzled due to the wrong results of the attacker.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+    """
+    defender.change_status("puzzled")
+
+
+def peer_reviewed_shield(attacker, defender):
+    """
+        Makes the defender sleeping due to the peer reviewed paper of the attacker.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+    """
+    defender.change_status("sleeping")
+
+
+def group_rebellion(attacker, defender):
+    """
+        Makes the defender puzzled due to the group rebellion of the attacker.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+    """
+    damage = simple_attack_uniform(attacker, defender,
+                                   power_attack=70,
+                                   bound_multiplicator=0.2)
+
+    # use advantages of types
+    damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
+
+    defender.take_damage(damage_adjusted)
+
+    # weakens all the attackers  # todo: implement
+    attacker.change_status("sleeping")
