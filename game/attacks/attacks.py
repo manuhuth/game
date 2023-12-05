@@ -19,6 +19,72 @@ def mathematics(attacker, defender):
         #print("math")
         defender.change_status("puzzled")
 
+def mattermost_message_concerning_everybody(attacker, defender):
+        """
+        Very strong attack due to public shaming.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+
+        Returns
+        -------
+        None
+        """
+        damage = simple_attack_uniform(attacker, defender,
+                                       power_attack=150,
+                                       bound_multiplicator=0.2)
+        
+        #use advantages of types
+        damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
+        
+        defender.take_damage(damage_adjusted)
+
+def restricted_travel_funds(attacker, defender):
+        """
+        Makes others really sad
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+
+        Returns
+        -------
+        None
+        """
+        defender.change_status("sad")
+        
+
+def tackle(attacker, defender):
+        """
+        Executes the attack from the attacker to the defender.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+
+        Returns
+        -------
+        None
+        """
+        damage = simple_attack_uniform(attacker, defender,
+                                       power_attack=50,
+                                       bound_multiplicator=0.2)
+        
+        #use advantages of types
+        damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
+        
+        defender.take_damage(damage_adjusted)
+
 def school_talk(attacker, defender):
         """
         Makes the defender sleeping.
@@ -37,53 +103,3 @@ def school_talk(attacker, defender):
         #print("school_talk")
         defender.change_status("sleeping")
 
-def tackle(attacker, defender):
-        """
-        Executes the attack from the attacker to the defender.
-
-        Parameters
-        ----------
-        attacker : Character
-            The character executing the attack.
-        defender : Character
-            The character defending against the attack.
-
-        Returns
-        -------
-        None
-        """
-        #print("tackle")
-        # Example attack logic, can be expanded with more complex mechanics
-        damage = simple_attack_uniform(attacker, defender,
-                                       power_attack=50,
-                                       bound_multiplicator=0.1)
-        
-        #use advantages of types
-        damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
-        
-        defender.take_damage(damage_adjusted)
-
-def mattermost_message_concerning_everybody(attacker, defender):
-        """
-        Very strong attack due to public shaming.
-
-        Parameters
-        ----------
-        attacker : Character
-            The character executing the attack.
-        defender : Character
-            The character defending against the attack.
-
-        Returns
-        -------
-        None
-        """
-        damage = simple_attack_uniform(attacker, defender,
-                                       power_attack=150,
-                                       bound_multiplicator=0.1)
-        
-        #use advantages of types
-        damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
-        
-        defender.take_damage(damage_adjusted)
-        

@@ -79,7 +79,7 @@ def conduct_status_based_action(attacker, defender):
     None
 
     """
-    if attacker.status == "sleeping":
+    if attacker.status in ["sleeping", "sad"] :
         None  # No action is taken
     elif attacker.status == "puzzled":
         if random.uniform(0.0, 1.0) > 0.9:
