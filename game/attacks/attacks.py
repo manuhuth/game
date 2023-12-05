@@ -62,3 +62,28 @@ def tackle(attacker, defender):
         damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
         
         defender.take_damage(damage_adjusted)
+
+def mattermost_message_concerning_everybody(attacker, defender):
+        """
+        Very strong attack due to public shaming.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+
+        Returns
+        -------
+        None
+        """
+        damage = simple_attack_uniform(attacker, defender,
+                                       power_attack=150,
+                                       bound_multiplicator=0.1)
+        
+        #use advantages of types
+        damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
+        
+        defender.take_damage(damage_adjusted)
+        

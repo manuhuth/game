@@ -5,7 +5,7 @@ os.chdir("/home/manuel/Documents/game")
 from game.characters.character_class import Character 
 
 #import attacks
-from game.attacks.attacks import tackle, mathematics, school_talk
+from game.attacks.attacks import tackle, mathematics, school_talk, mattermost_message_concerning_everybody
 
 #import battle function
 from game.battle import battle
@@ -16,10 +16,10 @@ character1 = Character(name="Jonas", char_type="smart",
                        speed=10, attacks=[tackle, mathematics],
                        attack_strategy="random")
 
-character2 = Character(name="Manu", char_type="funny",
+character2 = Character(name="Jan", char_type="funny",
                        max_health=100,
                        attack=25, defense=10,
-                       speed=10, attacks=[tackle, mathematics],
+                       speed=10, attacks=[mattermost_message_concerning_everybody, mathematics],
                        attack_strategy="random")
 
 winner = []
