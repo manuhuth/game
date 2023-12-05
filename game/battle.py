@@ -3,7 +3,7 @@ import random
 from game.status_functions import status_recovery
 from game.attacks._base_attack_functions import conduct_status_based_action 
 
-def battle(character1, character2):
+def single_battle(character1, character2):
     """
     Simulates a battle between two characters.
 
@@ -30,15 +30,21 @@ def battle(character1, character2):
         first, second = (character1, character2) if speed >= 0 else (character2, character1)
         
         # First character might heal status, chooses and executes an attack
-        status_recovery(first)
-        conduct_status_based_action(attacker=first, defender=second)
+        if first.can_attack:
+            status_recovery(first)
+            conduct_status_based_action(attacker=first, defender=second)
+        else:
+            first.change_attack_status(True)
 
         if second.is_defeated():
             return first.name
 
         # Second character might heal status, chooses and executes an attack
-        status_recovery(second)
-        conduct_status_based_action(attacker=second, defender=first)
+        if second.can_attack:
+            status_recovery(second)
+            conduct_status_based_action(attacker=second, defender=first)
+        else:
+            second.change_attack_status(True)
 
         if first.is_defeated():
             return second.name

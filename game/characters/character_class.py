@@ -63,6 +63,7 @@ class Character:
             self.attacks = attacks
             self.attack_strategy = attack_strategy
             self.status = None
+            self.can_attack = True
 
     def take_damage(self, damage):
         """
@@ -129,4 +130,20 @@ class Character:
         """
         self.status = new_status
     
+    def change_attack_status(self, new_status):
+        """
+        Updates the attack status of the character.
+
+        This method allows for changing the current status of the character to a new status. 
+
+        Parameters
+        ----------
+        new_status : bool
+            The new status to be assigned to the character.
+
+        Returns
+        -------
+        None
+        """
+        self.can_attack = new_status
 
