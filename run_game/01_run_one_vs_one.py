@@ -13,13 +13,13 @@ from game.attacks.attacks import tackle, mattermost_message_concerning_everybody
 #import battle function
 from game.battle import single_battle
 
-character1 = Character(name="Jonas", char_type="smart",
+character1 = Character(name="Y", char_type="smart",
                        max_health=100,
                        attack=25, defense=10,
                        speed=10, attacks=[delay_of_publication, group_presentation],
                        attack_strategy="random")
 
-character2 = Character(name="Jan", char_type="smart",
+character2 = Character(name="X", char_type="smart",
                        max_health=100,
                        attack=25, defense=10,
                        speed=10, attacks=[mattermost_message_concerning_everybody,
