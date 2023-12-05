@@ -25,6 +25,7 @@ def status_recovery(character, probability=0.5):
 
 def status_influence(character):
     """
+    not used.
     Applies the effects of a character's current status.
 
     Depending on the status of the character (e.g., 'sleeping', 'puzzled'), this function 

@@ -65,7 +65,6 @@ def team_battle(characters1, characters2):
     index1 = 0
     index2 = 0
     while (not(all(defeated1)) and not(all(defeated2))):
-        print(character1.name)
         single_battle(character1, character2)
         if character1.is_defeated():
             defeated1[index1] = True

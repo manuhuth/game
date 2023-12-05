@@ -111,6 +111,8 @@ class Character:
         """
         if self.attack_strategy == "random":
             return choose_attack_randomly(self.attacks)
+        if self.attack_strategy == "interactive":
+            None
     
     def change_status(self, new_status):
         """
