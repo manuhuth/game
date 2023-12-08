@@ -1,4 +1,5 @@
 import pygame
+import random
 
 
 def get_current_attack(text_positions, x, y) -> int:
@@ -28,3 +29,36 @@ def draw_health_bar(life, pv_start, screen, x, y):
     elif life <= pv_start / 2:
         pygame.draw.rect(screen, (255, 165, 0), (x, y, life / pv_start * 122, 8))
     return
+
+
+def switch_player(attacker, character1, character2, switched_player, current_round):
+    # switch player
+    print('switching player')
+    if not switched_player:
+        # switch players to complete the round
+        if attacker.name == character1.name:
+            attacker = character2
+            defender = character1
+            switched_player = True
+        else:
+            attacker = character1
+            defender = character2
+            switched_player = True
+    else:
+        # player already switched, so round is over
+        print('round is over, new speed is drawn')
+        switched_player = False
+        current_round += 1
+
+        # Determine turn order for the next round based on speed
+        speed = random.normalvariate(character1.speed - character2.speed,
+                                     (character1.speed + character2.speed) ** 0.5)
+
+        attacker, defender = (character1, character2) if speed >= 0 else (character2, character1)
+    return attacker, defender, switched_player, current_round
+
+
+def load_image(path, width=250, height=250):
+    pokeImage = pygame.image.load(path).convert_alpha()
+    pokeImage = pygame.transform.scale(pokeImage, (width, height))
+    return pokeImage

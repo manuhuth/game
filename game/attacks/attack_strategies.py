@@ -1,7 +1,7 @@
 import random
 
 
-def choose_attack_randomly(attacks):
+def choose_attack_randomly(attacks: list):
     """
     Chooses an attack randomly from a list of available attacks.
 

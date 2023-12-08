@@ -1,3 +1,5 @@
+from typing import Optional
+
 import numpy as np
 import random
    
@@ -37,7 +39,8 @@ def simple_attack_uniform(attacker, defender, power_attack, bound_multiplicator=
     # Generate and return the damage value
     return np.random.uniform(lower_bound, upper_bound, 1)[0]
 
-def conduct_attack(attacker, defender):
+
+def conduct_attack(attacker, defender, attack: Optional[callable] = None):
     """
     Executes an attack from the attacker to the defender.
 
@@ -49,17 +52,20 @@ def conduct_attack(attacker, defender):
         The character who is conducting the attack.
     defender : Character
         The character who is defending against the attack.
+    attack : function, optional
+        The attack to be executed (default is None). If None, the attacker will choose an attack.
 
     Returns
     -------
     None
     """
-    attack = attacker.choose_attack(defender)
+    if attack is None:
+        attack = attacker.choose_attack(defender)
     if attack:
         attack(attacker, defender)
 
 
-def conduct_status_based_action(attacker, defender):
+def conduct_status_based_action(attacker, defender, attack: Optional[callable] = None):
     """
     Performs an action based on the attacker's status.
 
@@ -73,21 +79,24 @@ def conduct_status_based_action(attacker, defender):
         The character who might take an action based on their status.
     defender : Character
         The character who would defend against any attack, if one occurs.
+    attack : function, optional
+        The attack to be executed (default is None). If None, the attacker will choose an attack.
 
     Returns
     -------
     None
 
     """
-    if attacker.status in ["sleeping", "sad", "occupied"] :
-        None  # No action is taken
+    if attacker.status in ["sleeping", "sad", "occupied"]:
+        pass  # No action is taken
     elif attacker.status == "puzzled":
         if random.uniform(0.0, 1.0) > 0.4:
             attacker.take_damage(attacker.max_health * 0.2)
         else:
-            conduct_attack(attacker, defender)
+            conduct_attack(attacker, defender, attack=attack)
     else:
-        conduct_attack(attacker, defender)
+        conduct_attack(attacker, defender, attack=attack)
+
 
 def attack_multiplier_by_type(attacker, defender):
     """

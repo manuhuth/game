@@ -1,5 +1,6 @@
 from game.attacks.attack_strategies import choose_attack_randomly
 
+
 class Character:
     """
     A class to represent a character in the game.
@@ -30,8 +31,8 @@ class Character:
     """
 
     def __init__(self, name, char_type, max_health, attack, defense, speed, attacks,
-                 attack_strategy):
-            """
+                 attack_strategy=None, image_path=None):
+        """
             Constructs all the necessary attributes for the character object.
     
             Parameters
@@ -46,24 +47,27 @@ class Character:
                     The defense strength of the character.
                 speed : int
                     The speed of the character.
-                attacks : list
-                    A list of attack functions that the character can perform.
+                attacks : dict
+                    A dict of attack functions that the character can perform.
                 attack_strategy : str
                     A strategy choosing the attack
+                image_path: str
+                    A path to the image of the character
             """
-            if not(char_type in ["physical", "smart", "strong", "popular", "funny"]):
-                raise ValueError('The type of a charcter must either be physical, smart, strong, popular, or funny.')
-            self.name = name
-            self.type = char_type
-            self.max_health = max_health
-            self.health = max_health
-            self.attack = attack
-            self.defense = defense
-            self.speed = speed
-            self.attacks = attacks
-            self.attack_strategy = attack_strategy
-            self.status = None
-            self.can_attack = True
+        if not (char_type in ["physical", "smart", "strong", "popular", "funny"]):
+            raise ValueError('The type of a charcter must either be physical, smart, strong, popular, or funny.')
+        self.name = name
+        self.type = char_type
+        self.max_health = max_health
+        self.health = max_health
+        self.attack = attack
+        self.defense = defense
+        self.speed = speed
+        self.attacks = attacks
+        self.attack_strategy = attack_strategy
+        self.status = None
+        self.can_attack = True
+        self.image_path = image_path
 
     def take_damage(self, damage):
         """
@@ -97,7 +101,7 @@ class Character:
             True if the character is defeated, False otherwise.
         """
         return self.health <= 0
-    
+
     def choose_attack(self, defender):
         """
         Chooses an attack based on the character's strategy.
@@ -110,10 +114,8 @@ class Character:
             A function representing the chosen attack.
         """
         if self.attack_strategy == "random":
-            return choose_attack_randomly(self.attacks)
-        if self.attack_strategy == "interactive":
-            None
-    
+            return choose_attack_randomly(list(self.attacks.values()))
+
     def change_status(self, new_status):
         """
         Updates the status of the character.
@@ -131,7 +133,7 @@ class Character:
         None
         """
         self.status = new_status
-    
+
     def change_attack_status(self, new_status):
         """
         Updates the attack status of the character.
@@ -148,4 +150,3 @@ class Character:
         None
         """
         self.can_attack = new_status
-
