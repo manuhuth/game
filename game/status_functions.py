@@ -1,5 +1,6 @@
 import random
 
+
 def status_recovery(character, probability=0.5):
     """
     Attempts to recover a character from their current status based on a probability.
@@ -22,6 +23,7 @@ def status_recovery(character, probability=0.5):
     if character.status is not None:
         if random.uniform(0.0, 1.0) > 1 - probability:
             character.change_status(None)
+
 
 def status_influence(character):
     """
