@@ -1,4 +1,5 @@
 import os
+os.chdir("/home/manuel/Documents/game")
 import random
 import time
 
@@ -13,6 +14,8 @@ from game.attacks.attacks import mattermost_message_concerning_everybody, \
     restricted_travel_funds, group_presentation, proposal_help, \
     telling_different_phd_duration_times, delay_of_publication, \
     cancels_meeting, declares_as_expert, travel_money_use
+
+os.chdir("/home/manuel/Documents/game/game")
 
 pygame.init()
 
@@ -39,7 +42,7 @@ UI_cursor = pygame.image.load(os.path.join('Resources/UI', 'cursor.png')).conver
 UI_cursor = pygame.transform.scale(UI_cursor, (40, 40))
 
 UI_dialogbox = pygame.image.load(os.path.join('Resources/UI', 'dialogbox.png')).convert_alpha()
-UI_dialogbox = pygame.transform.scale(UI_dialogbox, (screen_width * 0.9, screen_height / 3))
+UI_dialogbox = pygame.transform.scale(UI_dialogbox, (screen_width * 0.53, screen_height / 3))
 
 UI_hp_boxes = pygame.image.load(os.path.join('Resources/UI', 'ui_boxes.png')).convert_alpha()
 UI_hp_boxes = pygame.transform.scale(UI_hp_boxes, (screen_width, screen_height))
@@ -56,10 +59,10 @@ damagesound = pygame.mixer.Sound(os.path.join('Resources/sons', 'Hit_Damage.wav'
 boostsound = pygame.mixer.Sound(os.path.join('Resources/sons', 'Boost_sound.wav'))
 
 text_positions = {
-    "attack1": (100, 300),
-    "attack2": (350, 300),
-    "attack3": (100, 350),
-    "attack4": (350, 350)
+    "attack1": (85, 300),
+    "attack2": (250, 300),
+    "attack3": (85, 350),
+    "attack4": (250, 350)
 }
 
 # Cursor setup
@@ -259,7 +262,7 @@ def team_battle(characters1, characters2):
 ps1 = Character(name="Player 1", char_type="smart",
                 max_health=100,
                 attack=25, defense=10,
-                speed=10, attacks={'travel': travel_money_use,
+                speed=10, attacks={'travel\nmoney': travel_money_use,
                                    'group': group_presentation},
                 image_path=os.path.join('Resources/Philomons', 'torKant.png')
                 )
@@ -289,7 +292,8 @@ characters = [ps1, ps2]
 winner = []
 game_active = True
 
-set_standard_image(screen, background_image, load_image(sv.image_path), load_image(characters[0].image_path))
+set_standard_image(screen, background_image, load_image(sv.image_path),
+                   load_image(characters[0].image_path))
 while game_active:
     for _ in range(1):
         winner.append(team_battle([ps1, ps2], [sv]))
