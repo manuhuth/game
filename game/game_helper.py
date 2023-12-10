@@ -47,6 +47,7 @@ def switch_player(attacker, character1, character2, switched_player, current_rou
     else:
         # player already switched, so round is over
         print('round is over, new speed is drawn')
+        print("-------------------------------------------------------------------------------------------------------------")
         switched_player = False
         current_round += 1
 

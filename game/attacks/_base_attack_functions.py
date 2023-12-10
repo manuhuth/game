@@ -88,13 +88,18 @@ def conduct_status_based_action(attacker, defender, attack: Optional[callable] =
 
     """
     if attacker.status in ["sleeping", "sad", "occupied"]:
+        print(f"{attacker.name} is {attacker.status}")
         pass  # No action is taken
     elif attacker.status == "puzzled":
+        print(f"{attacker.name} is {attacker.status}")
         if random.uniform(0.0, 1.0) > 0.4:
+            print(f"{attacker.name} damaged itself")
             attacker.take_damage(attacker.max_health * 0.2)
         else:
+            print(f"{attacker.name} was able to attack")
             conduct_attack(attacker, defender, attack=attack)
     else:
+        print(f"{attacker.name} attacked")
         conduct_attack(attacker, defender, attack=attack)
 
 

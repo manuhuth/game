@@ -247,52 +247,8 @@ def single_battle(character1, character2):
     return "It's a tie!"
 
 
-
-def team_battle(characters1, characters2):
-    defeated1 = np.repeat(False, len(characters1))
-    defeated2 = np.repeat(False, len(characters2))
-
-    character1 = characters1[0]
-    character2 = characters2[0]
-
-    index1 = 0
-    index2 = 0
-    while (not (all(defeated1)) and not (all(defeated2))):
-        result = single_battle(character1, character2)
-        if result == "Game quit":
-            return "Game quit"
-
-        set_standard_image(screen, defeated_image,
-                           load_image(character1.image_path),
-                           load_image(character2.image_path))
-        screen.blit(font.render(f"{result} wins!", True, (0, 0, 0)),
-                    (100, 100))
-        pygame.display.flip()
-        pygame.event.pump()
-        pygame.time.delay(5 * 1000)
-
-        if character1.is_defeated():
-            defeated1[index1] = True
-            index1 += 1
-            character1 = characters1[np.min([index1, len(characters1) - 1])]
-
-        if character2.is_defeated():
-            defeated2[index2] = True
-            index2 += 1
-            character2 = characters2[np.min([index2, len(characters2) - 1])]
-
-        if all(defeated1) and all(defeated2):
-            return "Draw"
-
-        if all(defeated1):
-            return "Team 2"
-
-        if all(defeated2):
-            return "Team 1"
-
-
 ps1 = Character(name="Player 1", char_type="smart",
-                max_health=100,
+                max_health=1000,
                 attack=25, defense=10,
                 speed=10, attacks={'travel\nmoney': travel_money_use,
                                    'group': group_presentation},
@@ -300,7 +256,7 @@ ps1 = Character(name="Player 1", char_type="smart",
                 )
 
 ps2 = Character(name="Player 2", char_type="smart",
-                max_health=100,
+                max_health=1000,
                 attack=25, defense=10,
                 speed=10, attacks={'delay': delay_of_publication,
                                    'group': group_presentation},
@@ -328,12 +284,13 @@ set_standard_image(screen, background_image, load_image(sv.image_path),
                    load_image(characters[0].image_path))
 while game_active:
     for _ in range(1):
-        winner.append(team_battle([ps1, ps2], [sv]))
+        #winner.append(team_battle([ps1, ps2], [sv]))
+        single_battle(sv, ps1)
         ps1.heal(ps2.max_health)
         ps2.heal(ps2.max_health)
         sv.heal(sv.max_health)
 
-    winner.count("Team 1")
+    winner.count("Team 1") 
     break
 
 # todo: display winner

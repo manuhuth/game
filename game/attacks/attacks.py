@@ -18,6 +18,7 @@ def cancels_meeting(attacker, defender):
         -------
         None
         """
+    print(f"{attacker.name} used canceling meeting")
     damage = simple_attack_uniform(attacker, defender,
                                    power_attack=70,
                                    bound_multiplicator=0.2)
@@ -25,9 +26,12 @@ def cancels_meeting(attacker, defender):
     # use advantages of types
     damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
     defender.take_damage(damage_adjusted)
+    print(f"{defender.name} took {damage_adjusted} damage")
 
     if random.uniform(0.0, 1.0) > 0.5:
         defender.change_status("sad")
+        print(f"{defender.name} became {defender.status}")
+    
 
 
 def declares_as_expert(attacker, defender):
@@ -45,6 +49,7 @@ def declares_as_expert(attacker, defender):
         -------
         None
         """
+    print(f"{attacker.name} used declaring as expert")
     damage = simple_attack_uniform(attacker, defender,
                                    power_attack=70,
                                    bound_multiplicator=0.2)
@@ -52,9 +57,12 @@ def declares_as_expert(attacker, defender):
     # use advantages of types
     damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
     defender.take_damage(damage_adjusted)
+    print(f"{defender.name} took {damage_adjusted} damage")
 
     if random.uniform(0.0, 1.0) > 0.5:
         defender.change_status("puzzled")
+        print(f"{defender.name} became {defender.status}")
+    
 
 
 def delay_of_publication(attacker, defender):
@@ -72,6 +80,7 @@ def delay_of_publication(attacker, defender):
         -------
         None
         """
+    print(f"{attacker.name} used delay of publication")
     damage = simple_attack_uniform(attacker, defender,
                                    power_attack=70,
                                    bound_multiplicator=0.2)
@@ -80,6 +89,8 @@ def delay_of_publication(attacker, defender):
     damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
 
     defender.take_damage(damage_adjusted)
+    print(f"{defender.name} took {damage_adjusted} damage")
+    
 
 
 def group_presentation(attacker, defender):
@@ -97,7 +108,10 @@ def group_presentation(attacker, defender):
         -------
         None
         """
+    print(f"{attacker.name} used group presentation")
     defender.change_status("sleeping")
+    print(f"{defender.name} became {defender.status}")
+    
 
 
 def mathematics(attacker, defender):
@@ -116,7 +130,10 @@ def mathematics(attacker, defender):
         None
         """
     # print("math")
+    print(f"{attacker.name} used mathematics")
     defender.change_status("puzzled")
+    print(f"{defender.name} became {defender.status}")
+    
 
 
 def mattermost_message_concerning_everybody(attacker, defender):
@@ -134,6 +151,7 @@ def mattermost_message_concerning_everybody(attacker, defender):
         -------
         None
         """
+    print(f"{attacker.name} used Mattermost message concerning everybody")
     damage = simple_attack_uniform(attacker, defender,
                                    power_attack=170,
                                    bound_multiplicator=0.2)
@@ -142,7 +160,10 @@ def mattermost_message_concerning_everybody(attacker, defender):
     damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
 
     defender.take_damage(damage_adjusted)
+    print(f"{defender.name} took {damage_adjusted} damage")
     attacker.change_attack_status(False)
+    print(f"{attacker.name} became exhausted")
+    
 
 
 def restricted_travel_funds(attacker, defender):
@@ -160,7 +181,10 @@ def restricted_travel_funds(attacker, defender):
         -------
         None
         """
+    print(f"{attacker.name} used restricted travel funds")
     defender.change_status("sad")
+    print(f"{defender.name} became {defender.status}")
+    
 
 
 def tackle(attacker, defender):
@@ -178,6 +202,7 @@ def tackle(attacker, defender):
         -------
         None
         """
+    print(f"{attacker.name} used tackle")
     damage = simple_attack_uniform(attacker, defender,
                                    power_attack=50,
                                    bound_multiplicator=0.2)
@@ -186,6 +211,8 @@ def tackle(attacker, defender):
     damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
 
     defender.take_damage(damage_adjusted)
+    print(f"{defender.name} took {damage_adjusted} damage")
+    
 
 
 def telling_different_phd_duration_times(attacker, defender):
@@ -203,7 +230,10 @@ def telling_different_phd_duration_times(attacker, defender):
         -------
         None
         """
+    print(f"{attacker.name} used telling different PhD duration times")
     defender.change_status("puzzled")
+    print(f"{defender.name} became {defender.status}")
+    
 
 
 def travel_money_use(attacker, defender):
@@ -221,6 +251,7 @@ def travel_money_use(attacker, defender):
         -------
         None
         """
+    print(f"{attacker.name} used travel money")
     damage = simple_attack_uniform(attacker, defender,
                                    power_attack=60,
                                    bound_multiplicator=0.2)
@@ -229,6 +260,8 @@ def travel_money_use(attacker, defender):
     damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
 
     defender.take_damage(damage_adjusted)
+    print(f"{defender.name} took {damage_adjusted} damage")
+    
 
 
 def proposal_help(attacker, defender):
@@ -246,7 +279,10 @@ def proposal_help(attacker, defender):
         -------
         None
         """
+    print(f"{attacker.name} used proposal help")
     defender.change_status("occupied")
+    print(f"{defender.name} became {defender.status}")
+    
 
 
 def school_talk(attacker, defender):
@@ -264,8 +300,11 @@ def school_talk(attacker, defender):
         -------
         None
         """
+    print(f"{attacker.name} used talk about school")
     # print("school_talk")
     defender.change_status("sleeping")
+    print(f"{defender.name} became {defender.status}")
+    
 
 
 def julia_attacks(attacker, defender):
@@ -279,7 +318,9 @@ def julia_attacks(attacker, defender):
         defender : Character
             The character defending against the attack.
     """
+    print(f"{attacker.name} used julia")
     attacker.change_status("puzzled")
+    
 
 
 def hausmeister_power(attacker, defender):
@@ -293,7 +334,10 @@ def hausmeister_power(attacker, defender):
         defender : Character
             The character defending against the attack.
     """
+    print(f"{attacker.name} used hausmeister")
     defender.change_status("sad")
+    print(f"{defender.name} became {defender.status}")
+    
 
 
 def create_multiple_overleaf_documents(attacker, defender):
@@ -307,7 +351,10 @@ def create_multiple_overleaf_documents(attacker, defender):
         defender : Character
             The character defending against the attack.
     """
+    print(f"{attacker.name} used multiple overleaf documents")
     defender.change_status("puzzled")
+    print(f"{defender.name} became {defender.status}")
+    
 
 
 def unsupervised_learning(attacker, defender):
@@ -321,7 +368,10 @@ def unsupervised_learning(attacker, defender):
         defender : Character
             The character defending against the attack.
     """
+    print(f"{attacker.name} used unsupervised learning")
     defender.change_status("puzzled")
+    print(f"{defender.name} became {defender.status}")
+    
 
 
 def wrong_results(attacker, defender):
@@ -335,7 +385,10 @@ def wrong_results(attacker, defender):
         defender : Character
             The character defending against the attack.
     """
+    print(f"{attacker.name} used wrong results")
     defender.change_status("puzzled")
+    print(f"{defender.name} became {defender.status}")
+    
 
 
 def peer_reviewed_shield(attacker, defender):
@@ -349,7 +402,10 @@ def peer_reviewed_shield(attacker, defender):
         defender : Character
             The character defending against the attack.
     """
+    print(f"{attacker.name} used peer reviewed paper")
     defender.change_status("sleeping")
+    print(f"{defender.name} became {defender.status}")
+    
 
 
 def group_rebellion(attacker, defender):
@@ -363,6 +419,7 @@ def group_rebellion(attacker, defender):
         defender : Character
             The character defending against the attack.
     """
+    print(f"{attacker.name} used group rebellion")
     damage = simple_attack_uniform(attacker, defender,
                                    power_attack=70,
                                    bound_multiplicator=0.2)
@@ -371,6 +428,9 @@ def group_rebellion(attacker, defender):
     damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
 
     defender.take_damage(damage_adjusted)
+    print(f"{defender.name} took {damage_adjusted} damage")
 
     # weakens all the attackers  # todo: implement
     attacker.change_status("sleeping")
+    print(f"{defender.name} became {defender.status}")
+    
