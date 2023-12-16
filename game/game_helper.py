@@ -47,7 +47,7 @@ def switch_player(attacker, character1, character2, switched_player, current_rou
     else:
         # player already switched, so round is over
         print('round is over, new speed is drawn')
-        print("-------------------------------------------------------------------------------------------------------------")
+        print("-------------------------------------------------------------------------------------------------------")
         switched_player = False
         current_round += 1
 
@@ -60,6 +60,6 @@ def switch_player(attacker, character1, character2, switched_player, current_rou
 
 
 def load_image(path, width=250, height=250):
-    pokeImage = pygame.image.load(path).convert_alpha()
-    pokeImage = pygame.transform.scale(pokeImage, (width, height))
-    return pokeImage
+    image = pygame.image.load(path).convert_alpha()
+    image = pygame.transform.scale(image, (width, height))
+    return image
