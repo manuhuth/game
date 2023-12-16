@@ -370,9 +370,7 @@ def team_battle(characters1, characters2):
         else:
             screen.blit(font.render(f"{result} wins!", True, (0, 0, 0)),
                         (100, 100))
-        pygame.display.flip()
-        pygame.event.pump()
-        pygame.time.delay(5 * 1000)
+        wait(5)
 
         if character1.is_defeated():
             defeated1[index1] = True
@@ -430,6 +428,7 @@ game_active = True
 set_standard_image(screen, background_image, load_image(sv.image_path),
                    load_image(characters[0].image_path))
 while game_active:
+    break
     for _ in range(1):
         winner.append(team_battle([ps1, ps2], [sv]))
         ps1.heal(ps2.max_health)
@@ -439,8 +438,20 @@ while game_active:
     winner.count("Team 1")
     break
 
-# todo: display winner
 print(winner)
+if winner == 'Team 1':
+    screen.blit(background_image, (0, 0))
+    screen.blit(load_image(sv.image_path), (10, 175))
+    screen.blit(font.render(f"Team 1 wins!", True, (0, 0, 0)),
+                (100, 100))
+    wait(10)
+else:
+    screen.blit(background_image, (0, 0))
+    for c_id, character in enumerate(characters):
+        screen.blit(load_image(character.image_path), (10+c_id*200, 175))
+    screen.blit(font.render(f"Team 2 wins!", True, (0, 0, 0)),
+                (100, 100))
+    wait(10)
 
 # quit pygame
 pygame.quit()
