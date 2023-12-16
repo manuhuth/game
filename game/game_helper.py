@@ -63,3 +63,10 @@ def load_image(path, width=250, height=250):
     image = pygame.image.load(path).convert_alpha()
     image = pygame.transform.scale(image, (width, height))
     return image
+
+
+def wait(sec: int = 5):
+    pygame.display.flip()
+    pygame.event.pump()
+    pygame.time.delay(sec * 1000)
+    return

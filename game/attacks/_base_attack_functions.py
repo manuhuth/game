@@ -84,7 +84,7 @@ def conduct_status_based_action(attacker, defender, attack: Optional[callable] =
 
     Returns
     -------
-    None
+    None, bool
 
     """
     if attacker.status in ["sleeping", "sad", "occupied"]:
@@ -95,12 +95,15 @@ def conduct_status_based_action(attacker, defender, attack: Optional[callable] =
         if random.uniform(0.0, 1.0) > 0.4:
             print(f"{attacker.name} damaged itself")
             attacker.take_damage(attacker.max_health * 0.2)
+            return False
         else:
             print(f"{attacker.name} was able to attack")
             conduct_attack(attacker, defender, attack=attack)
+            return True
     else:
         print(f"{attacker.name} attacked")
         conduct_attack(attacker, defender, attack=attack)
+        return True
 
 
 def attack_multiplier_by_type(attacker, defender):
