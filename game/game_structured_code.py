@@ -428,6 +428,7 @@ game_active = True
 set_standard_image(screen, background_image, load_image(sv.image_path),
                    load_image(characters[0].image_path))
 while game_active:
+    break
     for _ in range(1):
         winner.append(team_battle([ps1, ps2], [sv]))
         ps1.heal(ps2.max_health)
