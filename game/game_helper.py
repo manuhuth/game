@@ -46,7 +46,6 @@ def switch_player(attacker, character1, character2, switched_player, current_rou
             switched_player = True
     else:
         # player already switched, so round is over
-        print('round is over, new speed is drawn')
         print("-------------------------------------------------------------------------------------------------------")
         switched_player = False
         current_round += 1
@@ -56,6 +55,7 @@ def switch_player(attacker, character1, character2, switched_player, current_rou
                                      (character1.speed + character2.speed) ** 0.5)
 
         attacker, defender = (character1, character2) if speed >= 0 else (character2, character1)
+        print(f"Round {current_round + 1} - {attacker.name} is attacking first")
     return attacker, defender, switched_player, current_round
 
 
@@ -67,6 +67,6 @@ def load_image(path, width=250, height=250):
 
 def wait(sec: int = 5):
     pygame.display.flip()
-    pygame.event.pump()
+    # pygame.event.pump()
     pygame.time.delay(sec * 1000)
     return

@@ -124,12 +124,18 @@ def single_battle(character1, character2):
     current_round = 0
     switched_player = False
     show_attacker_name = True
+    wait_for_key = False
+    switch_player_now = False
+    show_attack = False
+    change_attack_status = False
 
     # Determine turn order based on speed  # todo: display something
+    print("-------------------------------------------------------------------------------------------------------")
     speed = random.normalvariate(character1.speed - character2.speed,
                                  (character1.speed + character2.speed) ** 0.5)
 
     attacker, defender = (character1, character2) if speed >= 0 else (character2, character1)
+    print(f"Round {current_round + 1} - {attacker.name} is attacking first")
     possible_attacks = list(attacker.attacks.keys())
     possible_attacks = np.random.choice(possible_attacks, min(len(possible_attacks), 4), replace=False)
 
@@ -137,7 +143,7 @@ def single_battle(character1, character2):
                        load_image(character1.image_path),
                        load_image(character2.image_path))
 
-    while not character1.is_defeated() and not character2.is_defeated():
+    while not (character1.is_defeated() and character2.is_defeated()):
         for event in pygame.event.get():
             # check actions
             if event.type == pygame.QUIT:
@@ -150,6 +156,17 @@ def single_battle(character1, character2):
                 if show_attacker_name and event.key == pygame.K_SPACE:
                     show_attacker_name = False
                     make_dialog = True
+                    clingselection.play()
+
+                elif wait_for_key and event.key == pygame.K_SPACE:
+                    # waiting for key to be pressed to continue
+                    wait_for_key = False
+                    show_attack = False
+                    make_dialog = False
+                    if change_attack_status:
+                        # if attacker is exhausted, need to wait until next round
+                        attacker.change_attack_status(True)
+                        change_attack_status = False
                     clingselection.play()
 
                 # Handle cursor movement and attack selection only if make_dialog is True
@@ -169,6 +186,7 @@ def single_battle(character1, character2):
                     elif event.key == pygame.K_SPACE:
                         # close dialog, and use attack
                         perform_attack = True
+                        make_dialog = False
                         clingselection.play()
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -207,7 +225,6 @@ def single_battle(character1, character2):
                     screen.blit(font2.render(text, True, (0, 0, 0)), pos)
 
             else:
-                print('current attacker cannot attack')
                 screen.blit(UI_dialogbox, (screen_width * 0.05, screen_height * 0.6))
                 if attacker.status in ["sleeping", "sad", "occupied"]:
                     cannot_text = font2.render(f"you are sill {attacker.status}",
@@ -216,43 +233,52 @@ def single_battle(character1, character2):
                     cannot_text = font2.render(f"you are still exhausted",
                                                True, (0, 0, 0))
                 screen.blit(cannot_text, text_positions["attack1"])
+                wait_for_key = True
+                switch_player_now = True
+                change_attack_status = True
+
+        elif switch_player_now and not wait_for_key:
+            # switch players to complete the round
+            attacker, defender, switched_player, next_round = switch_player(attacker=attacker,
+                                                                            character1=character1,
+                                                                            character2=character2,
+                                                                            switched_player=switched_player,
+                                                                            current_round=current_round)
+            possible_attacks = list(attacker.attacks.keys())
+            possible_attacks = np.random.choice(possible_attacks, min(len(possible_attacks), 4), replace=False)
+            print(possible_attacks)
+
+            if current_round != next_round:
+                current_round = next_round
+                if character1.status is not None:
+                    screen.blit(status[character1.status], (575, 15))
+                if character2.status is not None:
+                    screen.blit(status[character2.status], (150, 150))
+
+                # show information about next round
+                screen.blit(next_round_image, (screen_width * 0.3, screen_height * 0.3))
                 wait(5)
 
-                attacker.change_attack_status(True)
+            # attacker might have a status, so check if they recover
+            if not (attacker.status is None):
+                stat = attacker.status
+                status_recovery(attacker)  # TODO: maybe display something
+                if stat == attacker.status:
+                    print(f"{attacker.name} is still {stat}")
+                else:
+                    print(f"{attacker.name} is not longer {stat}")
 
-                # switch player
-                attacker, defender, switched_player, next_round = switch_player(attacker=attacker,
-                                                                                character1=character1,
-                                                                                character2=character2,
-                                                                                switched_player=switched_player,
-                                                                                current_round=current_round)
-                possible_attacks = list(attacker.attacks.keys())
-                possible_attacks = np.random.choice(possible_attacks, min(len(possible_attacks), 4), replace=False)
-                perform_attack = False
-                make_dialog = False
-                show_attacker_name = True
-                print(possible_attacks)
+            # refresh the screen
+            set_standard_image(screen, background_image,
+                               load_image(character1.image_path),
+                               load_image(character2.image_path))
+            perform_attack = False
+            make_dialog = False
+            show_attacker_name = True
+            switch_player_now = False
+            show_attack = False
 
-                if current_round != next_round:
-                    current_round = next_round
-                    if character1.status is not None:
-                        screen.blit(status[character1.status], (575, 15))
-                    if character2.status is not None:
-                        screen.blit(status[character2.status], (150, 150))
-
-                    screen.blit(next_round_image, (screen_width * 0.3, screen_height * 0.3))
-                    wait(5)
-
-                # attacker might have a status, so check if they recover
-                if not (attacker.status is None):
-                    stat = attacker.status
-                    status_recovery(attacker)  # TODO: maybe display something
-                    if stat == attacker.status:
-                        print(f"{attacker.name} is still {stat}")
-                    else:
-                        print(f"{attacker.name} is not longer {stat}")
-
-        if perform_attack:
+        elif perform_attack:
             print('performing attack')
             # get current attack
             attack_nr = get_current_attack(text_positions, cursor_rect.x, cursor_rect.y)
@@ -265,14 +291,22 @@ def single_battle(character1, character2):
             attack_success = conduct_status_based_action(attacker=attacker, defender=defender,
                                                          attack=attacker.attacks[possible_attacks[attack_nr]])
             damagesound.play()
+
+            perform_attack = False
+            show_attack = True
+            switch_player_now = True
+            wait_for_key = True
+
+        elif show_attack:
             if attacker.status == "puzzled" and not attack_success:
+                # attacker damages themselves, show information
                 lost_health = int((attacker_health - attacker.health) / attacker.max_health * 100)
                 screen.blit(UI_dialogbox, (screen_width * 0.05, screen_height * 0.6))
                 self_damage = font2.render(f"you damaged yourself by {lost_health} %",
                                            True, (0, 0, 0))
                 screen.blit(self_damage, text_positions["attack1"])
-                wait(5)
             else:
+                # show information about attack
                 lost_health = int(((defender_health - defender.health) / defender.max_health * 100))
                 status_changed = defender_status != defender.status
 
@@ -294,49 +328,13 @@ def single_battle(character1, character2):
                                                True, (0, 0, 0))
                     screen.blit(status_text, (text_positions["attack1"][0],
                                               text_positions["attack1"][1] + 75))
-                wait(5)
 
             if defender.is_defeated():
                 print(f"{defender.name} is defeated")
                 return attacker.name
-
-            # switch player (round might be over or not)
-            attacker, defender, switched_player, next_round = switch_player(attacker=attacker,
-                                                                            character1=character1,
-                                                                            character2=character2,
-                                                                            switched_player=switched_player,
-                                                                            current_round=current_round)
-            possible_attacks = list(attacker.attacks.keys())
-            possible_attacks = np.random.choice(possible_attacks, min(len(possible_attacks), 4), replace=False)
-            print(possible_attacks)
-
-            if current_round != next_round:
-                current_round = next_round
-                if character1.status is not None:
-                    screen.blit(status[character1.status], (575, 15))
-                if character2.status is not None:
-                    screen.blit(status[character2.status], (150, 150))
-
-                screen.blit(next_round_image, (screen_width * 0.3, screen_height * 0.3))
-                wait(5)
-
-            # attacker might have a status, so check if they recover
-            if not (attacker.status is None):
-                stat = attacker.status
-                status_recovery(attacker)  # TODO: maybe display something
-                if stat == attacker.status:
-                    print(f"{attacker.name} is still {stat}")
-                else:
-                    print(f"{attacker.name} is not longer {stat}")
-
-            perform_attack = False
-            make_dialog = False
-            show_attacker_name = True
-
-            # refresh the screen
-            set_standard_image(screen, background_image,
-                               load_image(character1.image_path),
-                               load_image(character2.image_path))
+            elif attacker.is_defeated():
+                print(f"{attacker.name} is defeated")
+                return defender.name
 
         # refresh the screen
         pygame.display.flip()
@@ -429,26 +427,33 @@ set_standard_image(screen, background_image, load_image(sv.image_path),
                    load_image(characters[0].image_path))
 while game_active:
     for _ in range(1):
-        winner.append(team_battle([ps1, ps2], [sv]))
+        winner.append(team_battle(characters, [sv]))
         ps1.heal(ps2.max_health)
         ps2.heal(ps2.max_health)
         sv.heal(sv.max_health)
 
-    winner.count("Team 1")
     break
 
 print(winner)
-if winner == 'Team 1':
+if winner.count("Team 1") > winner.count("Team 2"):
+    screen.blit(background_image, (0, 0))
+    for c_id, character in enumerate(characters):
+        screen.blit(load_image(character.image_path), (10 + c_id * 200, 175))
+    screen.blit(font.render(f"Team 1 wins!", True, (0, 0, 0)),
+                (100, 100))
+    wait(10)
+elif winner.count("Team 1") < winner.count("Team 2"):
     screen.blit(background_image, (0, 0))
     screen.blit(load_image(sv.image_path), (10, 175))
-    screen.blit(font.render(f"Team 1 wins!", True, (0, 0, 0)),
+    screen.blit(font.render(f"Team 2 wins!", True, (0, 0, 0)),
                 (100, 100))
     wait(10)
 else:
     screen.blit(background_image, (0, 0))
+    screen.blit(load_image(sv.image_path), (10, 175))
     for c_id, character in enumerate(characters):
-        screen.blit(load_image(character.image_path), (10+c_id*200, 175))
-    screen.blit(font.render(f"Team 2 wins!", True, (0, 0, 0)),
+        screen.blit(load_image(character.image_path), (10 + (c_id+1) * 200, 175))
+    screen.blit(font.render(f"It's a tie!", True, (0, 0, 0)),
                 (100, 100))
     wait(10)
 
