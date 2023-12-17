@@ -16,7 +16,7 @@ def get_current_attack(text_positions, x, y) -> int:
 def set_standard_image(screen, back, p1, p2):
     screen.blit(back, (0, 0))
     screen.blit(p1, (375, 50))
-    screen.blit(p2, (10, 175))
+    screen.blit(p2, (100, 175))
     return
 
 
@@ -59,7 +59,7 @@ def switch_player(attacker, character1, character2, switched_player, current_rou
     return attacker, defender, switched_player, current_round
 
 
-def load_image(path, width=250, height=250):
+def load_image(path, width=150, height=150):
     image = pygame.image.load(path).convert_alpha()
     image = pygame.transform.scale(image, (width, height))
     return image

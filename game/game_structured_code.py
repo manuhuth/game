@@ -89,10 +89,10 @@ pygame.mixer.music.play()
 pygame.mixer.music.set_volume(0.2)
 
 text_positions = {
-    "attack1": (85, 300),
-    "attack2": (250, 300),
-    "attack3": (85, 350),
-    "attack4": (250, 350)
+    "attack1": (85, 340),
+    "attack2": (250, 340),
+    "attack3": (85, 390),
+    "attack4": (250, 390)
 }
 
 # Cursor setup
@@ -210,7 +210,7 @@ def single_battle(character1, character2):
 
         if show_attacker_name:
             # Display attacker's name only
-            screen.blit(UI_dialogbox, (screen_width * 0.05, screen_height * 0.6))
+            screen.blit(UI_dialogbox, (screen_width * 0.05, screen_height * 0.7))
             attacker_name_text = font2.render(f"{attacker.name}'s Turn", True, (0, 0, 0))
             screen.blit(attacker_name_text, text_positions["attack1"])
 
@@ -218,14 +218,14 @@ def single_battle(character1, character2):
             if attacker.can_attack and attacker.status not in ["sleeping", "sad", "occupied"]:
                 # only status "puzzled" will lead to an attack
                 # Display attacks only after attacker's name has been shown and space bar pressed
-                screen.blit(UI_dialogbox, (screen_width * 0.05, screen_height * 0.6))
+                screen.blit(UI_dialogbox, (screen_width * 0.05, screen_height * 0.7))
                 pygame.draw.polygon(screen, (0, 0, 0),
                                     [(x + cursor_rect.x, y + cursor_rect.y) for x, y in cursor_points])
                 for text, pos in zip(possible_attacks, text_positions.values()):
                     screen.blit(font2.render(text, True, (0, 0, 0)), pos)
 
             else:
-                screen.blit(UI_dialogbox, (screen_width * 0.05, screen_height * 0.6))
+                screen.blit(UI_dialogbox, (screen_width * 0.05, screen_height * 0.7))
                 if attacker.status in ["sleeping", "sad", "occupied"]:
                     cannot_text = font2.render(f"you are sill {attacker.status}",
                                                True, (0, 0, 0))
@@ -301,7 +301,7 @@ def single_battle(character1, character2):
             if attacker.status == "puzzled" and not attack_success:
                 # attacker damages themselves, show information
                 lost_health = int((attacker_health - attacker.health) / attacker.max_health * 100)
-                screen.blit(UI_dialogbox, (screen_width * 0.05, screen_height * 0.6))
+                screen.blit(UI_dialogbox, (screen_width * 0.05, screen_height * 0.7))
                 self_damage = font2.render(f"you damaged yourself by {lost_health} %",
                                            True, (0, 0, 0))
                 screen.blit(self_damage, text_positions["attack1"])
@@ -310,7 +310,7 @@ def single_battle(character1, character2):
                 lost_health = int(((defender_health - defender.health) / defender.max_health * 100))
                 status_changed = defender_status != defender.status
 
-                screen.blit(UI_dialogbox, (screen_width * 0.05, screen_height * 0.6))
+                screen.blit(UI_dialogbox, (screen_width * 0.05, screen_height * 0.7))
                 damage1 = font2.render(f"attacked with",
                                        True, (0, 0, 0))
                 damage2 = font2.render(f"{possible_attacks[attack_nr]}",
@@ -324,7 +324,7 @@ def single_battle(character1, character2):
                     screen.blit(damage3, (text_positions["attack1"][0],
                                           text_positions["attack1"][1] + 50))
                 if status_changed:
-                    status_text = font2.render(f"made your opponent {defender.status}",
+                    status_text = font2.render(f"opponent is {defender.status}",
                                                True, (0, 0, 0))
                     screen.blit(status_text, (text_positions["attack1"][0],
                                               text_positions["attack1"][1] + 75))
@@ -395,7 +395,7 @@ ps1 = Character(name="Player 1", char_type="smart",
                 attack=25, defense=10,
                 speed=10, attacks={'travel\nmoney': travel_money_use,
                                    'group': group_presentation},
-                image_path=os.path.join('Resources/Philomons', 'torKant.png')
+                image_path=os.path.join('Resources/Fotos', 'lea.png')
                 )
 
 ps2 = Character(name="Player 2", char_type="smart",
@@ -403,7 +403,7 @@ ps2 = Character(name="Player 2", char_type="smart",
                 attack=25, defense=10,
                 speed=10, attacks={'delay': delay_of_publication,
                                    'group': group_presentation},
-                image_path=os.path.join('Resources/Philomons', 'Leviator.png')
+                image_path=os.path.join('Resources/Fotos', 'clemens.png')
                 )
 
 sv = Character(name="JanoMon", char_type="smart",
@@ -416,7 +416,7 @@ sv = Character(name="JanoMon", char_type="smart",
                                   'cancels': cancels_meeting,
                                   'declares': declares_as_expert
                                   },
-               image_path=os.path.join('Resources/Philomons', 'astronaut.png')
+               image_path=os.path.join('Resources/Fotos', 'jan.png')
                )
 
 characters = [ps1, ps2]
