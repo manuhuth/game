@@ -29,6 +29,9 @@ background_image = pygame.image.load(os.path.join('Resources/Background', 'back1
 # Scale the image to fit the screen
 background_image = pygame.transform.scale(background_image, (screen_width, screen_height))
 
+damage_image = pygame.image.load(os.path.join('Resources/Background', 'back7.png'))
+damage_image = pygame.transform.scale(damage_image, (screen_width, screen_height))
+
 defeated_image = pygame.image.load(os.path.join('Resources/Background', 'back3.png'))
 defeated_image = pygame.transform.scale(defeated_image, (screen_width, screen_height))
 
@@ -256,7 +259,15 @@ def single_battle(character1, character2):
                     screen.blit(status[character2.status], (150, 150))
 
                 # show information about next round
-                screen.blit(next_round_image, (screen_width * 0.3, screen_height * 0.3))
+                screen.blit(UI_dialogbox, (screen_width * 0.05, screen_height * 0.7))
+                round_text = font2.render(f"next round",
+                                          True, (0, 0, 0))
+                round_text2 = font2.render(f"{attacker.name} was faster",
+                                           True, (0, 0, 0))
+                screen.blit(round_text, text_positions["attack1"])
+                screen.blit(round_text2, (text_positions["attack1"][0], text_positions["attack1"][1] + 25))
+
+                # screen.blit(next_round_image, (screen_width * 0.3, screen_height * 0.3))
                 wait(5)
 
             # attacker might have a status, so check if they recover
@@ -280,6 +291,10 @@ def single_battle(character1, character2):
 
         elif perform_attack:
             print('performing attack')
+            set_standard_image(screen, damage_image,
+                               load_image(character1.image_path),
+                               load_image(character2.image_path))
+
             # get current attack
             attack_nr = get_current_attack(text_positions, cursor_rect.x, cursor_rect.y)
             attack_nr = attack_nr if attack_nr < len(possible_attacks) else 0
@@ -452,7 +467,7 @@ else:
     screen.blit(background_image, (0, 0))
     screen.blit(load_image(sv.image_path), (10, 175))
     for c_id, character in enumerate(characters):
-        screen.blit(load_image(character.image_path), (10 + (c_id+1) * 200, 175))
+        screen.blit(load_image(character.image_path), (10 + (c_id + 1) * 200, 175))
     screen.blit(font.render(f"It's a tie!", True, (0, 0, 0)),
                 (100, 100))
     wait(10)
