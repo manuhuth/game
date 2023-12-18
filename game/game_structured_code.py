@@ -1,16 +1,12 @@
 import os
-import random
 import numpy as np
 import pygame
 
 from game.characters.character_class import Character
 from game.status_functions import status_recovery
-from game.attacks._base_attack_functions import conduct_status_based_action
+from game.attacks.base_attack_functions import conduct_status_based_action
 from game.game_helper import get_current_attack, set_standard_image, draw_health_bar, switch_player, load_image, wait
-from game.attacks.attacks import mattermost_message_concerning_everybody, \
-    restricted_travel_funds, group_presentation, proposal_help, \
-    telling_different_phd_duration_times, delay_of_publication, \
-    cancels_meeting, declares_as_expert, travel_money_use
+from game.attacks.attacks import *
 
 pygame.init()
 
@@ -317,7 +313,7 @@ def single_battle(character1, character2):
                 # attacker damages themselves, show information
                 lost_health = int((attacker_health - attacker.health) / attacker.max_health * 100)
                 screen.blit(UI_dialogbox, (screen_width * 0.05, screen_height * 0.7))
-                self_damage = font2.render(f"you damaged yourself by {lost_health} %",
+                self_damage = font2.render(f"self damaged by {lost_health} %",
                                            True, (0, 0, 0))
                 screen.blit(self_damage, text_positions["attack1"])
             else:
@@ -328,7 +324,8 @@ def single_battle(character1, character2):
                 screen.blit(UI_dialogbox, (screen_width * 0.05, screen_height * 0.7))
                 damage1 = font2.render(f"attacked with",
                                        True, (0, 0, 0))
-                damage2 = font2.render(f"{possible_attacks[attack_nr]}",
+
+                damage2 = font2.render(f'"{attack_messages[possible_attacks[attack_nr]]}"',
                                        True, (0, 0, 0))
                 screen.blit(damage1, text_positions["attack1"])
                 screen.blit(damage2, (text_positions["attack1"][0],
@@ -405,36 +402,59 @@ def team_battle(characters1, characters2):
             return "Team 1"
 
 
-ps1 = Character(name="Player 1", char_type="smart",
+ps1 = Character(name="Leator", char_type="smart",
                 max_health=100,
                 attack=25, defense=10,
-                speed=10, attacks={'travel\nmoney': travel_money_use,
-                                   'group': group_presentation},
+                speed=10, attacks={'travel': travel_money_use,  # strong attack
+                                   'overleaf': create_multiple_overleaf_documents  # puzzles but weak attack
+                                   },
                 image_path=os.path.join('Resources/Fotos', 'lea.png')
                 )
 
-ps2 = Character(name="Player 2", char_type="smart",
+ps2 = Character(name="Clementine", char_type="smart",
                 max_health=100,
                 attack=25, defense=10,
-                speed=10, attacks={'delay': delay_of_publication,
-                                   'group': group_presentation},
+                speed=10, attacks={'julia': julia_attacks,   # attacker gets puzzled, might cause self damage
+                                   'janitor': hausmeister_power  # makes defender sad, weak attack
+                                   },
                 image_path=os.path.join('Resources/Fotos', 'clemens.png')
                 )
 
-sv = Character(name="JanoMon", char_type="smart",
-               max_health=400,
+ps3 = Character(name="SuperMarc", char_type="smart",
+                max_health=100,
+                attack=25, defense=10,
+                speed=10, attacks={'unsupervised': unsupervised_learning,  # puzzles the defender
+                                   'math': mathematics  # can puzzle and damage both players
+                                   },
+                image_path=os.path.join('Resources/Fotos', 'marc.png')
+                )
+
+
+ps4 = Character(name="Postdoc Maria", char_type="smart",
+                max_health=200,
+                attack=25, defense=10,
+                speed=10, attacks={'rebellion': group_rebellion,  # very strong attack but causes sleeping
+                                   'delay': delay_of_publication,  # very strong attack
+                                   'postdoc': postdoc_power,   # doubles her base attack
+                                   # 'shield': peer_reviewed_shield   # makes defender puzzled
+                                   },
+                image_path=os.path.join('Resources/Fotos', 'maria.png')
+                )
+
+sv = Character(name="Janomon", char_type="smart",
+               max_health=500,
                attack=25, defense=10,
-               speed=10, attacks={'mattermost': mattermost_message_concerning_everybody,
-                                  'travel': restricted_travel_funds,
-                                  'proposal': proposal_help,
-                                  'telling': telling_different_phd_duration_times,
-                                  'cancels': cancels_meeting,
-                                  'declares': declares_as_expert
+               speed=10, attacks={'mattermost': mattermost_message_concerning_everybody,  # instant kill
+                                  'funds': restricted_travel_funds,  # makes defender sad
+                                  'proposal': proposal_help,  # makes defender occupied
+                                  'telling': telling_different_phd_duration_times,  # makes defender puzzled
+                                  'cancel': cancels_meeting,  # strong attack and can make defender sad
+                                  'declare': declares_as_expert  # strong attack and can make defender puzzled
                                   },
                image_path=os.path.join('Resources/Fotos', 'jan.png')
                )
 
-characters = [ps1, ps2]
+characters = [ps1, ps2, ps3, ps4]
 winner = []
 game_active = True
 
@@ -467,7 +487,7 @@ else:
     screen.blit(background_image, (0, 0))
     screen.blit(load_image(sv.image_path), (10, 175))
     for c_id, character in enumerate(characters):
-        screen.blit(load_image(character.image_path), (10 + (c_id + 1) * 200, 175))
+        screen.blit(load_image(character.image_path), (10 + (c_id + 1) * 150, 175))
     screen.blit(font.render(f"It's a tie!", True, (0, 0, 0)),
                 (100, 100))
     wait(10)
