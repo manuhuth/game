@@ -2,7 +2,7 @@ import random
 import numpy as np
 
 from game.status_functions import status_recovery
-from game.attacks._base_attack_functions import conduct_status_based_action
+from game.attacks.base_attack_functions import conduct_status_based_action
 
 
 def single_battle(character1, character2):

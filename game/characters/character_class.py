@@ -121,7 +121,7 @@ class Character:
         Updates the status of the character.
 
         This method allows for changing the current status of the character to a new status.
-        Meaningful statuses are "bored", "interested", "puzzled". 
+        Meaningful statuses are "sad", "puzzled", "sleeping", "occupied"
 
         Parameters
         ----------

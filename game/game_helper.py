@@ -16,7 +16,7 @@ def get_current_attack(text_positions, x, y) -> int:
 def set_standard_image(screen, back, p1, p2):
     screen.blit(back, (0, 0))
     screen.blit(p1, (375, 50))
-    screen.blit(p2, (10, 175))
+    screen.blit(p2, (100, 175))
     return
 
 
@@ -46,8 +46,7 @@ def switch_player(attacker, character1, character2, switched_player, current_rou
             switched_player = True
     else:
         # player already switched, so round is over
-        print('round is over, new speed is drawn')
-        print("-------------------------------------------------------------------------------------------------------------")
+        print("-------------------------------------------------------------------------------------------------------")
         switched_player = False
         current_round += 1
 
@@ -56,10 +55,18 @@ def switch_player(attacker, character1, character2, switched_player, current_rou
                                      (character1.speed + character2.speed) ** 0.5)
 
         attacker, defender = (character1, character2) if speed >= 0 else (character2, character1)
+        print(f"Round {current_round + 1} - {attacker.name} is attacking first")
     return attacker, defender, switched_player, current_round
 
 
-def load_image(path, width=250, height=250):
-    pokeImage = pygame.image.load(path).convert_alpha()
-    pokeImage = pygame.transform.scale(pokeImage, (width, height))
-    return pokeImage
+def load_image(path, width=150, height=150):
+    image = pygame.image.load(path).convert_alpha()
+    image = pygame.transform.scale(image, (width, height))
+    return image
+
+
+def wait(sec: int = 5):
+    pygame.display.flip()
+    # pygame.event.pump()
+    pygame.time.delay(sec * 1000)
+    return
