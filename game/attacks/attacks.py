@@ -170,7 +170,7 @@ def good_research(attacker, defender):
     """
     print(f"{attacker.name} did amazing research")
     damage = simple_attack_uniform(attacker, defender,
-                                   power_attack=40,
+                                   power_attack=60,
                                    bound_multiplicator=0.2)
 
     # use advantages of types
@@ -291,7 +291,7 @@ def julia_attacks(attacker, defender):
     attacker.change_status("puzzled")
 
     damage = simple_attack_uniform(defender, attacker,
-                                   power_attack=50,
+                                   power_attack=20,
                                    bound_multiplicator=0.2)
 
     # use advantages of types
@@ -521,7 +521,7 @@ def travel_money_use(attacker, defender):
         """
     print(f"{attacker.name} used travel money")
     damage = simple_attack_uniform(attacker, defender,
-                                   power_attack=70,
+                                   power_attack=60,
                                    bound_multiplicator=0.2)
 
     # use advantages of types

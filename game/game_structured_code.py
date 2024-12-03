@@ -493,7 +493,7 @@ set_standard_image(screen, background_image, load_image(sv.image_path),
 while game_active:
     for _ in range(1):
         winner.append(team_battle([sv], characters))
-        #sv.heal(sv.max_health * 0.1)
+        sv.heal(int(sv.max_health * 0.1))
     break
 
 print(winner)
