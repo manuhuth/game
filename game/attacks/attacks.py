@@ -463,7 +463,7 @@ def restricted_travel_funds(attacker, defender):
     """
     print(f"{attacker.name} used restricted travel funds")
     damage = simple_attack_uniform(attacker, defender,
-                                   power_attack=20,
+                                   power_attack=10,
                                    bound_multiplicator=0.2)
 
     # use advantages of types
@@ -492,7 +492,7 @@ def telling_different_phd_duration_times(attacker, defender):
         """
     print(f"{attacker.name} used telling different PhD duration times")
     damage = simple_attack_uniform(attacker, defender,
-                                   power_attack=20,
+                                   power_attack=10,
                                    bound_multiplicator=0.2)
 
     # use advantages of types

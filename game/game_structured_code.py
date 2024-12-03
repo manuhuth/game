@@ -138,6 +138,11 @@ def single_battle(character1, character2):
     attacker, defender = (character1, character2) if speed >= 0 else (character2, character1)
     print(f"Round {current_round + 1} - {attacker.name} is attacking first")
     possible_attacks = list(attacker.attacks.keys())
+    if current_round == 0 and attacker.name == "Janomon":
+        # mattermost attack is not possible yet
+        possible_attacks.remove('mattermost')
+        print("Mattermost attack is not possible yet")
+
     possible_attacks = np.random.choice(possible_attacks, min(len(possible_attacks), 4), replace=False)
 
     set_standard_image(screen, background_image,
@@ -193,6 +198,9 @@ def single_battle(character1, character2):
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 # Handle mouse button events if necessary
                 pass
+
+        # Clear the event queue to prevent accumulation of new events
+        pygame.event.clear()
 
         # draw health bars
         screen.blit(UI_hp_boxes, (0, 50))
@@ -349,6 +357,9 @@ def single_battle(character1, character2):
             elif attacker.is_defeated():
                 print(f"{attacker.name} is defeated")
                 return defender.name
+
+        # Clear the event queue to prevent accumulation of new events
+        pygame.event.clear()
 
         # refresh the screen
         pygame.display.flip()
