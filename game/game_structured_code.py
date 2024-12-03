@@ -130,8 +130,9 @@ def single_battle(character1, character2):
 
     # Determine turn order based on speed  # todo: display something
     print("-------------------------------------------------------------------------------------------------------")
-    speed = random.normalvariate(character1.speed - character2.speed,
-                                 (character1.speed + character2.speed) ** 0.5)
+    #speed = random.normalvariate(character1.speed - character2.speed,
+    #                             (character1.speed + character2.speed) ** 0.5)
+    speed = 1
 
     attacker, defender = (character1, character2) if speed >= 0 else (character2, character1)
     print(f"Round {current_round + 1} - {attacker.name} is attacking first")
@@ -405,8 +406,11 @@ def team_battle(characters1, characters2):
 ps1 = Character(name="Leator", char_type="smart",
                 max_health=100,
                 attack=25, defense=10,
-                speed=10, attacks={'travel': travel_money_use,  # strong attack
-                                   'overleaf': create_multiple_overleaf_documents  # puzzles but weak attack
+                speed=10, attacks={
+                                    'bad research': research_attack,  # strong attack
+                                    'travel': travel_money_use,  # strong attack
+                                   #'overleaf': create_multiple_overleaf_documents  # puzzles but weak attack
+                                   'paperol': lea_is_drunken  # attacker gets puzzled, but caused damage
                                    },
                 image_path=os.path.join('Resources/Fotos', 'lea.png')
                 )
@@ -414,31 +418,40 @@ ps1 = Character(name="Leator", char_type="smart",
 ps2 = Character(name="Clementine", char_type="smart",
                 max_health=100,
                 attack=25, defense=10,
-                speed=10, attacks={'julia': julia_attacks,   # attacker gets puzzled, might cause self damage
-                                   'janitor': hausmeister_power  # makes defender sad, weak attack
+                speed=10, attacks={
+'bad research': research_attack,  # strong attack
+                                   #'julia': julia_attacks,   # attacker gets puzzled, might cause self damage
+                                   'janitor': hausmeister_power,  # makes defender sad, weak attack
+                                    'tom': tom_calls  # attacked occupied, next attack of defender is weak
                                    },
                 image_path=os.path.join('Resources/Fotos', 'clemens.png')
                 )
 
-ps3 = Character(name="SuperMarc", char_type="smart",
-                max_health=100,
-                attack=25, defense=10,
-                speed=10, attacks={'unsupervised': unsupervised_learning,  # puzzles the defender
-                                   'math': mathematics  # can puzzle and damage both players
-                                   },
-                image_path=os.path.join('Resources/Fotos', 'marc.png')
-                )
 
-
-ps4 = Character(name="Postdoc Maria", char_type="smart",
+ps3 = Character(name="Cabuela", char_type="smart",
                 max_health=200,
                 attack=25, defense=10,
-                speed=10, attacks={'rebellion': group_rebellion,  # very strong attack but causes sleeping
+                speed=10, attacks={
+                            'bad research': research_attack,  # strong attack
+                            'file': file_attack,  # strong attack
+                            # 'rebellion': group_rebellion,  # very strong attack but causes sleeping
                                    'delay': delay_of_publication,  # very strong attack
-                                   'postdoc': postdoc_power,   # doubles her base attack
+                                   #'postdoc': postdoc_power,   # doubles her base attack
+
                                    # 'shield': peer_reviewed_shield   # makes defender puzzled
                                    },
-                image_path=os.path.join('Resources/Fotos', 'maria.png')
+                image_path=os.path.join('Resources/Fotos', 'caro.png')
+                )
+
+ps4 = Character(name="SuperMarc", char_type="smart",
+                max_health=100,
+                attack=25, defense=10,
+                speed=10, attacks={
+'good research': good_research_attack,  # strong attack
+                                   'math': mathematics,  # can puzzle and damage both players
+                                   'julia': julia_attacks,  # turns around attack order
+                                   },
+                image_path=os.path.join('Resources/Fotos', 'marc.png')
                 )
 
 sv = Character(name="Janomon", char_type="smart",
@@ -449,7 +462,8 @@ sv = Character(name="Janomon", char_type="smart",
                                   'proposal': proposal_help,  # makes defender occupied
                                   'telling': telling_different_phd_duration_times,  # makes defender puzzled
                                   'cancel': cancels_meeting,  # strong attack and can make defender sad
-                                  'declare': declares_as_expert  # strong attack and can make defender puzzled
+                                  'declare': declares_as_expert,  # strong attack and can make defender puzzled
+                                  #'absence': jan_absence  # strong defense
                                   },
                image_path=os.path.join('Resources/Fotos', 'jan.png')
                )
@@ -462,7 +476,7 @@ set_standard_image(screen, background_image, load_image(sv.image_path),
                    load_image(characters[0].image_path))
 while game_active:
     for _ in range(1):
-        winner.append(team_battle(characters, [sv]))
+        winner.append(team_battle([sv], characters))
         ps1.heal(ps2.max_health)
         ps2.heal(ps2.max_health)
         sv.heal(sv.max_health)
