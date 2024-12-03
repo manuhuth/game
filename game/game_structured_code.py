@@ -86,6 +86,7 @@ pygame.mixer.init()
 pygame.mixer.music.load(os.path.join('Resources/sons', 'Pokemon Sound.mp3'))
 pygame.mixer.music.play()
 pygame.mixer.music.set_volume(0.2)
+pygame.mixer.music.play(loops=-1)  # Set loops to -1 for infinite repetition
 
 text_positions = {
     "attack1": (85, 340),
@@ -227,7 +228,7 @@ def single_battle(character1, character2):
             else:
                 screen.blit(UI_dialogbox, (screen_width * 0.05, screen_height * 0.7))
                 if attacker.status in ["sleeping", "sad", "occupied"]:
-                    cannot_text = font2.render(f"you are sill {attacker.status}",
+                    cannot_text = font2.render(f"you are still {attacker.status}",
                                                True, (0, 0, 0))
                 else:
                     cannot_text = font2.render(f"you are still exhausted",
@@ -376,10 +377,10 @@ def team_battle(characters1, characters2):
                            load_image(character1.image_path),
                            load_image(character2.image_path))
         if character1.is_defeated() and character2.is_defeated():
-            screen.blit(font.render(f"It's a tie!", True, (0, 0, 0)),
+            screen.blit(font.render(f"It's a tie!", True, (255, 255, 255)),
                         (100, 100))
         else:
-            screen.blit(font.render(f"{result} wins!", True, (0, 0, 0)),
+            screen.blit(font.render(f"{result} wins!", True, (255, 255, 255)),
                         (100, 100))
         wait(5)
 
@@ -407,9 +408,9 @@ ps1 = Character(name="Leator", char_type="smart",
                 max_health=100,
                 attack=25, defense=10,
                 speed=10, attacks={
-        'bad research': bad_research,  # weak attack
+        'research': bad_research,  # weak attack
         'travel': travel_money_use,  # strong attack
-        'paperol': lea_is_drunken  # attacker gets puzzled, but caused damage
+        'paperol': paperol  # attacker gets puzzled, but caused damage
     },
                 image_path=os.path.join('Resources/Fotos', 'lea.png')
                 )
@@ -418,7 +419,7 @@ ps2 = Character(name="Clementine", char_type="smart",
                 max_health=100,
                 attack=25, defense=10,
                 speed=10, attacks={
-        'bad research': bad_research,  # weak attack
+        'research': bad_research,  # weak attack
         'janitor': hausmeister_power,  # makes defender sad, weak attack
         'tom': tom_calls  # attacker occupied, nothing happens
     },
@@ -430,7 +431,7 @@ ps3 = Character(name="Cabuela", char_type="smart",
                 max_health=200,
                 attack=25, defense=10,
                 speed=10, attacks={
-        'bad research': bad_research,  # weak attack
+        'research': bad_research,  # weak attack
         'file': file_attack,  # weak attack
         'delay': delay_of_publication,  # very strong attack
     },
@@ -441,9 +442,10 @@ ps4 = Character(name="SuperMarc", char_type="smart",
                 max_health=100,
                 attack=25, defense=10,
                 speed=10, attacks={
-        'good research': good_research,  # strong attack
+        'research ': good_research,  # strong attack
         'math': mathematics,  # can puzzle and damage both players
         'julia': julia_attacks,  # turns around attack order
+        'postdoc': postdoc_power # increases attack power
     },
                 image_path=os.path.join('Resources/Fotos', 'marc.png')
                 )
@@ -457,7 +459,7 @@ sv = Character(name="Janomon", char_type="smart",
                                   'telling': telling_different_phd_duration_times,  # makes defender puzzled
                                   'cancel': cancels_meeting,  # strong attack and can make defender sad
                                   'declare': declares_as_expert,  # strong attack and can make defender puzzled
-                                  #'absence': jan_absence  # strong defense
+                                  'absence': jan_absence  # strong defense
                                   },
                image_path=os.path.join('Resources/Fotos', 'jan.png')
                )
@@ -466,29 +468,35 @@ characters = [ps1, ps2, ps3, ps4]
 winner = []
 game_active = True
 
+# for all characters, check if attack keys are valid
+for character in characters:
+    for key in character.attacks.keys():
+        if key not in attack_messages.keys():
+            raise ValueError(f"Attack key {key} is not valid")
+for key in sv.attacks.keys():
+    if key not in attack_messages.keys():
+        raise ValueError(f"Attack key {key} is not valid")
+
 set_standard_image(screen, background_image, load_image(sv.image_path),
                    load_image(characters[0].image_path))
 while game_active:
     for _ in range(1):
         winner.append(team_battle([sv], characters))
-        ps1.heal(ps2.max_health)
-        ps2.heal(ps2.max_health)
-        sv.heal(sv.max_health)
-
+        #sv.heal(sv.max_health * 0.1)
     break
 
 print(winner)
-if winner.count("Team 1") > winner.count("Team 2"):
+if winner.count("Team 1") < winner.count("Team 2"):
     screen.blit(background_image, (0, 0))
     for c_id, character in enumerate(characters):
         screen.blit(load_image(character.image_path), (10 + c_id * 200, 175))
-    screen.blit(font.render(f"Team 1 wins!", True, (0, 0, 0)),
+    screen.blit(font.render(f"Team 2 wins!", True, (0, 0, 0)),
                 (100, 100))
     wait(10)
-elif winner.count("Team 1") < winner.count("Team 2"):
+elif winner.count("Team 1") > winner.count("Team 2"):
     screen.blit(background_image, (0, 0))
     screen.blit(load_image(sv.image_path), (10, 175))
-    screen.blit(font.render(f"Team 2 wins!", True, (0, 0, 0)),
+    screen.blit(font.render(f"Team 1 wins!", True, (0, 0, 0)),
                 (100, 100))
     wait(10)
 else:

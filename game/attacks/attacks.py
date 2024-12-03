@@ -7,55 +7,29 @@ attack_messages = {
     'travel': 'used travel funds',
     'overleaf': 'multiple overleaf docs',
     'julia': 'used julia, got TypeError',
-    'janitor': 'janitor burned unicorn',
-    'unsupervised': 'unsupervised learning',
+    'janitor': 'burned unicorn',
     'math': 'math was too complicated',
     'rebellion': 'group rebellion',
     'delay': 'delayed publication',
     'postdoc': 'postdoc added',
-    'shield': 'peer reviewed shield',
     'mattermost': 'concerning everybody',
     'funds': 'restricted travel funds',
     'proposal': 'proposal help requested',
     'telling': 'new phd duration time',
     'cancel': 'cancelled meeting',
-    'declare': 'declared as expert'
+    'declare': 'declared as expert',
+    'paperol': 'aperol spritz',
+    'research': 'bad research',
+    'research ': 'good research',
+    'file': 'bad file reading',
+    'tom': 'is busy, tom called',
+    'absence': 'is absent',
 }
-
-
-def cancels_meeting(attacker, defender):
-    """
-        Cancels meeting and  might make student sad.
-
-        Parameters
-        ----------
-        attacker : Character
-            The character executing the attack.
-        defender : Character
-            The character defending against the attack.
-
-        Returns
-        -------
-        None
-        """
-    print(f"{attacker.name} used canceling meeting")
-    damage = simple_attack_uniform(attacker, defender,
-                                   power_attack=70,
-                                   bound_multiplicator=0.2)
-
-    # use advantages of types
-    damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
-    defender.take_damage(damage_adjusted)
-    print(f"{defender.name} took {damage_adjusted} damage")
-
-    if random.uniform(0.0, 1.0) > 0.5:
-        defender.change_status("sad")
-        print(f"{defender.name} became {defender.status}")
 
 
 def bad_research(attacker, defender):
     """
-        Makes the defender puzzled due to bad research.
+        Basic attack, rather weak.
 
         Parameters
         ----------
@@ -74,8 +48,91 @@ def bad_research(attacker, defender):
     defender.take_damage(damage_adjusted)
     print(f"{defender.name} took {damage_adjusted} damage")
 
-    #defender.change_status("puzzled")
-    #print(f"{defender.name} became {defender.status}")
+
+def cancels_meeting(attacker, defender):
+    """
+        Cancels meeting and might make student sad.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+
+        Returns
+        -------
+        None
+    """
+    print(f"{attacker.name} used canceling meeting")
+    damage = simple_attack_uniform(attacker, defender,
+                                   power_attack=70,
+                                   bound_multiplicator=0.2)
+
+    # use advantages of types
+    damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
+    defender.take_damage(damage_adjusted)
+    print(f"{defender.name} took {damage_adjusted} damage")
+
+    if random.uniform(0.0, 1.0) > 0.5:
+        defender.change_status("sad")
+        print(f"{defender.name} became {defender.status}")
+
+def declares_as_expert(attacker, defender):
+    """
+        Declares the opponent as an expert what might puzzle the opponent.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+
+        Returns
+        -------
+        None
+    """
+    print(f"{attacker.name} used declaring as expert")
+    damage = simple_attack_uniform(attacker, defender,
+                                   power_attack=70,
+                                   bound_multiplicator=0.2)
+
+    # use advantages of types
+    damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
+    defender.take_damage(damage_adjusted)
+    print(f"{defender.name} took {damage_adjusted} damage")
+
+    if random.uniform(0.0, 1.0) > 0.5:
+        defender.change_status("puzzled")
+        print(f"{defender.name} became {defender.status}")
+
+
+def delay_of_publication(attacker, defender):
+    """
+        Really strong attack. Delay of publication.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+
+        Returns
+        -------
+        None
+    """
+    print(f"{attacker.name} used delay of publication")
+    damage = simple_attack_uniform(attacker, defender,
+                                   power_attack=100,
+                                   bound_multiplicator=0.2)
+
+    # use advantages of types
+    damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
+
+    defender.take_damage(damage_adjusted)
+    print(f"{defender.name} took {damage_adjusted} damage")
 
 
 def file_attack(attacker, defender):
@@ -102,7 +159,7 @@ def file_attack(attacker, defender):
 
 def good_research(attacker, defender):
     """
-        Makes the defender puzzled due to good research.
+        Attack the defender based on good research.
 
         Parameters
         ----------
@@ -121,52 +178,10 @@ def good_research(attacker, defender):
     defender.take_damage(damage_adjusted)
     print(f"{defender.name} took {damage_adjusted} damage")
 
-    defender.change_status("puzzled")
-    print(f"{defender.name} became {defender.status}")
 
-
-def tom_calls(attacker, defender):
+def jan_absence(attacker, defender):
     """
-        Makes the defender puzzled due to alcohol.
-
-        Parameters
-        ----------
-        attacker : Character
-            The character executing the attack.
-        defender : Character
-            The character defending against the attack.
-    """
-    print(f"{attacker.name} got a call by Tom and is occupied now.")
-    pass
-
-
-def lea_is_drunken(attacker, defender):
-    """
-        Makes the defender puzzled due to alcohol.
-
-        Parameters
-        ----------
-        attacker : Character
-            The character executing the attack.
-        defender : Character
-            The character defending against the attack.
-    """
-    print(f"{attacker.name} got drunk. {defender.name} has to pay!")
-    damage = simple_attack_uniform(attacker, defender,
-                                   power_attack=20,
-                                   bound_multiplicator=0.2)
-
-    # use advantages of types
-    damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
-    defender.take_damage(damage_adjusted)
-    print(f"{defender.name} took {damage_adjusted} damage")
-
-    defender.change_status("puzzled")
-    print(f"{defender.name} became {defender.status}")
-
-def declares_as_expert(attacker, defender):
-    """
-        Declares the opponent as an expert what might puzzle the opponent.
+        Janitor is absent, heals himself and makes opponent puzzled.
 
         Parameters
         ----------
@@ -178,47 +193,13 @@ def declares_as_expert(attacker, defender):
         Returns
         -------
         None
-        """
-    print(f"{attacker.name} used declaring as expert")
-    damage = simple_attack_uniform(attacker, defender,
-                                   power_attack=70,
-                                   bound_multiplicator=0.2)
-
-    # use advantages of types
-    damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
-    defender.take_damage(damage_adjusted)
-    print(f"{defender.name} took {damage_adjusted} damage")
-
-    if random.uniform(0.0, 1.0) > 0.5:
-        defender.change_status("puzzled")
-        print(f"{defender.name} became {defender.status}")
-
-
-def delay_of_publication(attacker, defender):
     """
-        Really strong attack.
+    print(f"{attacker.name} is absent.")
+    attacker.heal(attacker.max_health * 0.1)
+    print(f"{attacker.name} healed 10% of his health")
 
-        Parameters
-        ----------
-        attacker : Character
-            The character executing the attack.
-        defender : Character
-            The character defending against the attack.
-
-        Returns
-        -------
-        None
-        """
-    print(f"{attacker.name} used delay of publication")
-    damage = simple_attack_uniform(attacker, defender,
-                                   power_attack=100,
-                                   bound_multiplicator=0.2)
-
-    # use advantages of types
-    damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
-
-    defender.take_damage(damage_adjusted)
-    print(f"{defender.name} took {damage_adjusted} damage")
+    defender.change_status("puzzled")
+    print(f"{defender.name} became {defender.status}")
 
 
 def group_presentation(attacker, defender):
@@ -235,7 +216,7 @@ def group_presentation(attacker, defender):
         Returns
         -------
         None
-        """
+    """
     print(f"{attacker.name} used group presentation")
     defender.change_status("sleeping")
     print(f"{defender.name} became {defender.status}")
@@ -334,8 +315,7 @@ def mathematics(attacker, defender):
         Returns
         -------
         None
-        """
-    # print("math")
+    """
     print(f"{attacker.name} used mathematics")
     if random.uniform(0.0, 1.0) > 0.5:
         defender.change_status("puzzled")
@@ -380,10 +360,10 @@ def mattermost_message_concerning_everybody(attacker, defender):
         Returns
         -------
         None
-        """
+    """
     print(f"{attacker.name} used Mattermost message concerning everybody")
     damage = simple_attack_uniform(attacker, defender,
-                                   power_attack=170,
+                                   power_attack=100,
                                    bound_multiplicator=0.2)
 
     # use advantages of types
@@ -395,9 +375,34 @@ def mattermost_message_concerning_everybody(attacker, defender):
     print(f"{attacker.name} became exhausted")
 
 
+def paperol(attacker, defender):
+    """
+        Makes the defender puzzled due to alcohol.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+    """
+    print(f"{attacker.name} got drunk. {defender.name} has to pay!")
+    damage = simple_attack_uniform(attacker, defender,
+                                   power_attack=20,
+                                   bound_multiplicator=0.2)
+
+    # use advantages of types
+    damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
+    defender.take_damage(damage_adjusted)
+    print(f"{defender.name} took {damage_adjusted} damage")
+
+    defender.change_status("puzzled")
+    print(f"{defender.name} became {defender.status}")
+
+
 def proposal_help(attacker, defender):
     """
-        Makes the defender sleeping.
+        Makes the defender occupied. Weak attack.
 
         Parameters
         ----------
@@ -409,104 +414,10 @@ def proposal_help(attacker, defender):
         Returns
         -------
         None
-        """
+    """
     print(f"{attacker.name} used proposal help")
-    defender.change_status("occupied")
-    print(f"{defender.name} became {defender.status}")
-
-
-def peer_reviewed_shield(attacker, defender):
-    """
-        Makes the defender sleeping due to the peer reviewed paper of the attacker.
-
-        Parameters
-        ----------
-        attacker : Character
-            The character executing the attack.
-        defender : Character
-            The character defending against the attack.
-    """
-    print(f"{attacker.name} used peer reviewed paper")
-    defender.change_status("sleeping")
-    print(f"{defender.name} became {defender.status}")
-
-
-def postdoc_power(attacker, defender):
-    """
-        Increases base damage of the attacker in the next round.
-
-        Parameters
-        ----------
-        attacker : Character
-            The character executing the attack.
-        defender : Character
-            The character defending against the attack.
-        """
-    print(f"{attacker.name} used her postdoc power")
-    if random.uniform(0.0, 1.0) > 0.25:
-        attacker.attack = attacker.attack * 1.5
-        print(f"{attacker.name} increased her damage by 50%")
-
-
-def restricted_travel_funds(attacker, defender):
-    """
-        Makes others really sad
-
-        Parameters
-        ----------
-        attacker : Character
-            The character executing the attack.
-        defender : Character
-            The character defending against the attack.
-
-        Returns
-        -------
-        None
-        """
-    print(f"{attacker.name} used restricted travel funds")
-    defender.change_status("sad")
-    print(f"{defender.name} became {defender.status}")
-
-
-def school_talk(attacker, defender):
-    """
-        Makes the defender sleeping.
-
-        Parameters
-        ----------
-        attacker : Character
-            The character executing the attack.
-        defender : Character
-            The character defending against the attack.
-
-        Returns
-        -------
-        None
-        """
-    print(f"{attacker.name} used talk about school")
-    # print("school_talk")
-    defender.change_status("sleeping")
-    print(f"{defender.name} became {defender.status}")
-
-
-def tackle(attacker, defender):
-    """
-        Executes the attack from the attacker to the defender.
-
-        Parameters
-        ----------
-        attacker : Character
-            The character executing the attack.
-        defender : Character
-            The character defending against the attack.
-
-        Returns
-        -------
-        None
-        """
-    print(f"{attacker.name} used tackle")
     damage = simple_attack_uniform(attacker, defender,
-                                   power_attack=50,
+                                   power_attack=20,
                                    bound_multiplicator=0.2)
 
     # use advantages of types
@@ -514,11 +425,59 @@ def tackle(attacker, defender):
 
     defender.take_damage(damage_adjusted)
     print(f"{defender.name} took {damage_adjusted} damage")
+    defender.change_status("occupied")
+    print(f"{defender.name} became {defender.status}")
+
+
+def postdoc_power(attacker, defender):
+    """
+        Increases the attacker's base damage in the next round.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+    """
+    print(f"{attacker.name} used the postdoc power.")
+    if random.uniform(0.0, 1.0) > 0.25:
+        #attacker.attack = attacker.attack * 1.5
+        print(f"{attacker.name} would have increased damage by 50% if thesis would have been finished.")
+
+
+def restricted_travel_funds(attacker, defender):
+    """
+        Makes others really sad. Weak attack.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+
+        Returns
+        -------
+        None
+    """
+    print(f"{attacker.name} used restricted travel funds")
+    damage = simple_attack_uniform(attacker, defender,
+                                   power_attack=20,
+                                   bound_multiplicator=0.2)
+
+    # use advantages of types
+    damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
+
+    defender.take_damage(damage_adjusted)
+    print(f"{defender.name} took {damage_adjusted} damage")
+    defender.change_status("sad")
+    print(f"{defender.name} became {defender.status}")
 
 
 def telling_different_phd_duration_times(attacker, defender):
     """
-        Makes the defender puzzled.
+        Makes the defender puzzled. Weak attack.
 
         Parameters
         ----------
@@ -532,13 +491,22 @@ def telling_different_phd_duration_times(attacker, defender):
         None
         """
     print(f"{attacker.name} used telling different PhD duration times")
+    damage = simple_attack_uniform(attacker, defender,
+                                   power_attack=20,
+                                   bound_multiplicator=0.2)
+
+    # use advantages of types
+    damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
+
+    defender.take_damage(damage_adjusted)
+    print(f"{defender.name} took {damage_adjusted} damage")
     defender.change_status("puzzled")
     print(f"{defender.name} became {defender.status}")
 
 
 def travel_money_use(attacker, defender):
     """
-        Executes the attack from the attacker to the defender.
+        Attacker uses travel money. Strong attack.
 
         Parameters
         ----------
@@ -563,9 +531,9 @@ def travel_money_use(attacker, defender):
     print(f"{defender.name} took {damage_adjusted} damage")
 
 
-def unsupervised_learning(attacker, defender):
+def tom_calls(attacker, defender):
     """
-        Makes the defender puzzled due to the unsupervised learning outcome of the attacker.
+        Makes the attacker busy and unable to attack in this round.
 
         Parameters
         ----------
@@ -574,22 +542,5 @@ def unsupervised_learning(attacker, defender):
         defender : Character
             The character defending against the attack.
     """
-    print(f"{attacker.name} used unsupervised learning")
-    defender.change_status("puzzled")
-    print(f"{defender.name} became {defender.status}")
-
-
-def wrong_results(attacker, defender):
-    """
-        Makes the defender puzzled due to the wrong results of the attacker.
-
-        Parameters
-        ----------
-        attacker : Character
-            The character executing the attack.
-        defender : Character
-            The character defending against the attack.
-    """
-    print(f"{attacker.name} used wrong results")
-    defender.change_status("puzzled")
-    print(f"{defender.name} became {defender.status}")
+    print(f"{attacker.name} got a call by Tom and is occupied now.")
+    pass

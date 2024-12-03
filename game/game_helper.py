@@ -45,14 +45,15 @@ def switch_player(attacker, character1, character2, switched_player, current_rou
             defender = character2
             switched_player = True
     else:
-        # player already switched, so round is over
+        # player already switched, so round is over  # todo: display message
         print("-------------------------------------------------------------------------------------------------------")
         switched_player = False
         current_round += 1
 
         # Determine turn order for the next round based on speed
-        speed = random.normalvariate(character1.speed - character2.speed,
-                                     (character1.speed + character2.speed) ** 0.5)
+        #speed = random.normalvariate(character1.speed - character2.speed,
+        #                             (character1.speed + character2.speed) ** 0.5)
+        speed = 1
 
         attacker, defender = (character1, character2) if speed >= 0 else (character2, character1)
         print(f"Round {current_round + 1} - {attacker.name} is attacking first")
