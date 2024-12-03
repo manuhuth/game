@@ -11,7 +11,7 @@ attack_messages = {
     'math': 'math was too complicated',
     'rebellion': 'group rebellion',
     'delay': 'delayed publication',
-    'postdoc': 'postdoc added',
+    'postdoc': 'postdoc power - failed',
     'mattermost': 'concerning everybody',
     'funds': 'restricted travel funds',
     'proposal': 'proposal help requested',
@@ -261,9 +261,9 @@ def hausmeister_power(attacker, defender):
         defender : Character
             The character defending against the attack.
     """
-    print(f"{attacker.name} used hausmeister")
+    print(f"{attacker.name} burned unicorn")
     damage = simple_attack_uniform(attacker, defender,
-                                   power_attack=20,
+                                   power_attack=50,
                                    bound_multiplicator=0.2)
 
     # use advantages of types
@@ -363,7 +363,7 @@ def mattermost_message_concerning_everybody(attacker, defender):
     """
     print(f"{attacker.name} used Mattermost message concerning everybody")
     damage = simple_attack_uniform(attacker, defender,
-                                   power_attack=100,
+                                   power_attack=80,
                                    bound_multiplicator=0.2)
 
     # use advantages of types
