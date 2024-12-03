@@ -138,7 +138,7 @@ def single_battle(character1, character2):
     attacker, defender = (character1, character2) if speed >= 0 else (character2, character1)
     print(f"Round {current_round + 1} - {attacker.name} is attacking first")
     possible_attacks = list(attacker.attacks.keys())
-    if current_round == 0 and attacker.name == "Janomon":
+    if current_round == 0 and attacker.name == "Janomon" or defender.name == "SuperMarc":
         # mattermost attack is not possible yet
         possible_attacks.remove('mattermost')
         print("Mattermost attack is not possible yet")
@@ -268,10 +268,10 @@ def single_battle(character1, character2):
                 screen.blit(UI_dialogbox, (screen_width * 0.05, screen_height * 0.7))
                 round_text = font2.render(f"next round",
                                           True, (0, 0, 0))
-                round_text2 = font2.render(f"{attacker.name} was faster",
-                                           True, (0, 0, 0))
                 screen.blit(round_text, text_positions["attack1"])
-                screen.blit(round_text2, (text_positions["attack1"][0], text_positions["attack1"][1] + 25))
+                #round_text2 = font2.render(f"{attacker.name} was faster",
+                #                           True, (0, 0, 0))
+                #screen.blit(round_text2, (text_positions["attack1"][0], text_positions["attack1"][1] + 25))
 
                 # screen.blit(next_round_image, (screen_width * 0.3, screen_height * 0.3))
                 wait(5)
