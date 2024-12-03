@@ -407,11 +407,10 @@ ps1 = Character(name="Leator", char_type="smart",
                 max_health=100,
                 attack=25, defense=10,
                 speed=10, attacks={
-                                    'bad research': research_attack,  # strong attack
-                                    'travel': travel_money_use,  # strong attack
-                                   #'overleaf': create_multiple_overleaf_documents  # puzzles but weak attack
-                                   'paperol': lea_is_drunken  # attacker gets puzzled, but caused damage
-                                   },
+        'bad research': bad_research,  # weak attack
+        'travel': travel_money_use,  # strong attack
+        'paperol': lea_is_drunken  # attacker gets puzzled, but caused damage
+    },
                 image_path=os.path.join('Resources/Fotos', 'lea.png')
                 )
 
@@ -419,11 +418,10 @@ ps2 = Character(name="Clementine", char_type="smart",
                 max_health=100,
                 attack=25, defense=10,
                 speed=10, attacks={
-'bad research': research_attack,  # strong attack
-                                   #'julia': julia_attacks,   # attacker gets puzzled, might cause self damage
-                                   'janitor': hausmeister_power,  # makes defender sad, weak attack
-                                    'tom': tom_calls  # attacked occupied, next attack of defender is weak
-                                   },
+        'bad research': bad_research,  # weak attack
+        'janitor': hausmeister_power,  # makes defender sad, weak attack
+        'tom': tom_calls  # attacker occupied, nothing happens
+    },
                 image_path=os.path.join('Resources/Fotos', 'clemens.png')
                 )
 
@@ -432,14 +430,10 @@ ps3 = Character(name="Cabuela", char_type="smart",
                 max_health=200,
                 attack=25, defense=10,
                 speed=10, attacks={
-                            'bad research': research_attack,  # strong attack
-                            'file': file_attack,  # strong attack
-                            # 'rebellion': group_rebellion,  # very strong attack but causes sleeping
-                                   'delay': delay_of_publication,  # very strong attack
-                                   #'postdoc': postdoc_power,   # doubles her base attack
-
-                                   # 'shield': peer_reviewed_shield   # makes defender puzzled
-                                   },
+        'bad research': bad_research,  # weak attack
+        'file': file_attack,  # weak attack
+        'delay': delay_of_publication,  # very strong attack
+    },
                 image_path=os.path.join('Resources/Fotos', 'caro.png')
                 )
 
@@ -447,10 +441,10 @@ ps4 = Character(name="SuperMarc", char_type="smart",
                 max_health=100,
                 attack=25, defense=10,
                 speed=10, attacks={
-'good research': good_research_attack,  # strong attack
-                                   'math': mathematics,  # can puzzle and damage both players
-                                   'julia': julia_attacks,  # turns around attack order
-                                   },
+        'good research': good_research,  # strong attack
+        'math': mathematics,  # can puzzle and damage both players
+        'julia': julia_attacks,  # turns around attack order
+    },
                 image_path=os.path.join('Resources/Fotos', 'marc.png')
                 )
 

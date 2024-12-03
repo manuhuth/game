@@ -53,10 +53,9 @@ def cancels_meeting(attacker, defender):
         print(f"{defender.name} became {defender.status}")
 
 
-def create_multiple_overleaf_documents(attacker, defender):
+def bad_research(attacker, defender):
     """
-        Makes the defender puzzled due to the multiple overleaf documents.
-        Weak attack but will definitely puzzle the opponent.
+        Makes the defender puzzled due to bad research.
 
         Parameters
         ----------
@@ -65,7 +64,94 @@ def create_multiple_overleaf_documents(attacker, defender):
         defender : Character
             The character defending against the attack.
     """
-    print(f"{attacker.name} used multiple overleaf documents")
+    print(f"{attacker.name} did bad research")
+    damage = simple_attack_uniform(attacker, defender,
+                                   power_attack=20,
+                                   bound_multiplicator=0.2)
+
+    # use advantages of types
+    damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
+    defender.take_damage(damage_adjusted)
+    print(f"{defender.name} took {damage_adjusted} damage")
+
+    #defender.change_status("puzzled")
+    #print(f"{defender.name} became {defender.status}")
+
+
+def file_attack(attacker, defender):
+    """
+        Makes the defender puzzled due to bad research.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+    """
+    print(f"{attacker.name} could not read in the files and messed up the research.")
+    damage = simple_attack_uniform(attacker, defender,
+                                   power_attack=20,
+                                   bound_multiplicator=0.2)
+
+    # use advantages of types
+    damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
+    defender.take_damage(damage_adjusted)
+    print(f"{defender.name} took {damage_adjusted} damage")
+
+
+def good_research(attacker, defender):
+    """
+        Makes the defender puzzled due to good research.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+    """
+    print(f"{attacker.name} did amazing research")
+    damage = simple_attack_uniform(attacker, defender,
+                                   power_attack=40,
+                                   bound_multiplicator=0.2)
+
+    # use advantages of types
+    damage_adjusted = attack_multiplier_by_type(attacker, defender) * damage
+    defender.take_damage(damage_adjusted)
+    print(f"{defender.name} took {damage_adjusted} damage")
+
+    defender.change_status("puzzled")
+    print(f"{defender.name} became {defender.status}")
+
+
+def tom_calls(attacker, defender):
+    """
+        Makes the defender puzzled due to alcohol.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+    """
+    print(f"{attacker.name} got a call by Tom and is occupied now.")
+    pass
+
+
+def lea_is_drunken(attacker, defender):
+    """
+        Makes the defender puzzled due to alcohol.
+
+        Parameters
+        ----------
+        attacker : Character
+            The character executing the attack.
+        defender : Character
+            The character defending against the attack.
+    """
+    print(f"{attacker.name} got drunk. {defender.name} has to pay!")
     damage = simple_attack_uniform(attacker, defender,
                                    power_attack=20,
                                    bound_multiplicator=0.2)
@@ -77,7 +163,6 @@ def create_multiple_overleaf_documents(attacker, defender):
 
     defender.change_status("puzzled")
     print(f"{defender.name} became {defender.status}")
-
 
 def declares_as_expert(attacker, defender):
     """
