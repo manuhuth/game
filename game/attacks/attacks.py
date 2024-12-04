@@ -137,7 +137,7 @@ def delay_of_publication(attacker, defender):
 
 def gpu_attack(attacker, defender):
     """
-        Makes the defender puzzled due to bad research.
+        Blocks the GPU on the unicorn. Weak attack since resources on Marvin are still free.
 
         Parameters
         ----------
