@@ -443,7 +443,7 @@ ps3 = Character(name="Cabuela", char_type="smart",
                 attack=25, defense=10,
                 speed=10, attacks={
         'research': bad_research,  # weak attack
-        'file': file_attack,  # weak attack
+        'gpu': gpu_attack,  # weak attack
         'delay': delay_of_publication,  # very strong attack
     },
                 image_path=os.path.join('Resources/Fotos', 'caro.png')

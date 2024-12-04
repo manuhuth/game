@@ -21,7 +21,7 @@ attack_messages = {
     'paperol': 'aperol spritz',
     'research': 'bad research',
     'research ': 'good research',
-    'file': 'bad file reading',
+    'gpu': 'unicorn is fully blocked',
     'tom': 'is busy, tom called',
     'absence': 'is absent',
 }
@@ -135,7 +135,7 @@ def delay_of_publication(attacker, defender):
     print(f"{defender.name} took {damage_adjusted} damage")
 
 
-def file_attack(attacker, defender):
+def gpu_attack(attacker, defender):
     """
         Makes the defender puzzled due to bad research.
 
@@ -146,7 +146,7 @@ def file_attack(attacker, defender):
         defender : Character
             The character defending against the attack.
     """
-    print(f"{attacker.name} could not read in the files and messed up the research.")
+    print(f"{attacker.name} blocked the gpu on unicorn. But resources on Marvin are still free...")
     damage = simple_attack_uniform(attacker, defender,
                                    power_attack=20,
                                    bound_multiplicator=0.2)
